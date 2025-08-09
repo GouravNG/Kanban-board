@@ -1,9 +1,16 @@
 "use client"
 import { ArrowRight } from "lucide-react"
-import { SignInButton, SignUpButton, UserButton, useUser } from "@clerk/nextjs"
+import {
+  SignInButton,
+  SignUpButton,
+  useAuth,
+  UserButton,
+  useUser,
+} from "@clerk/nextjs"
 import { Button } from "./ui/button"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
+import { useKey } from "@/store/persist.store"
 
 const AuthUI = () => {
   return (
@@ -23,6 +30,10 @@ const AuthUI = () => {
 
 const HomeUI = () => {
   const { user } = useUser()
+  const { getToken } = useAuth()
+  const { setUA_key } = useKey()
+  getToken().then((token) => setUA_key(token ?? ""))
+
   return (
     <>
       <span className="text-xs sm:text-sm text-gray-600 hidden md:block">
