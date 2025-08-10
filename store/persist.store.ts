@@ -3,23 +3,23 @@ import { persist } from "zustand/middleware"
 import { useShallow } from "zustand/shallow"
 
 type PersistStoreTypes = {
-  ua_key: string
-  setUA_key: (key: string) => void
+  apiKey: string | null
+  setApiKey: (key: string | null) => void
 }
 
 export const usePersistStore = create<PersistStoreTypes>()(
   persist(
     (set) => ({
-      ua_key: "",
-      setUA_key: (key) => set({ ua_key: key }),
+      apiKey: null,
+      setApiKey: (key) => set({ apiKey: key }),
     }),
     {
-      name: "persist-store",
+      name: "zp-store",
     }
   )
 )
 
-export const useKey = () =>
+export const useApikey = () =>
   usePersistStore(
-    useShallow(({ setUA_key, ua_key }) => ({ setUA_key, ua_key }))
+    useShallow(({ apiKey, setApiKey }) => ({ apiKey, setApiKey }))
   )

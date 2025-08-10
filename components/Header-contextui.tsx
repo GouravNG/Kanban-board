@@ -1,16 +1,10 @@
 "use client"
 import { ArrowRight } from "lucide-react"
-import {
-  SignInButton,
-  SignUpButton,
-  useAuth,
-  UserButton,
-  useUser,
-} from "@clerk/nextjs"
+import { SignInButton, SignUpButton, UserButton, useUser } from "@clerk/nextjs"
 import { Button } from "./ui/button"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { useKey } from "@/store/persist.store"
+import { useToken } from "@/lib/hooks/utils.hooks"
 
 const AuthUI = () => {
   return (
@@ -30,9 +24,6 @@ const AuthUI = () => {
 
 const HomeUI = () => {
   const { user } = useUser()
-  const { getToken } = useAuth()
-  const { setUA_key } = useKey()
-  getToken().then((token) => setUA_key(token ?? ""))
 
   return (
     <>
@@ -56,7 +47,7 @@ const DashboardUI = () => {
 
 const HeaderContextUI = () => {
   const { isSignedIn } = useUser()
-
+  useToken()
   const pathName = usePathname()
   const isHomePage = pathName === "/"
   const isDashBoardPage = pathName === "/dashboard"
