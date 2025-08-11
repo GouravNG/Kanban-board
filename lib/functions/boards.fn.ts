@@ -1,28 +1,21 @@
-import axios from "axios"
-import { getHeaders } from "./utils"
-import { TBoards } from "../types"
+import { CreateBoardSchema, TBoards } from "../types"
+import queryClient from "../queryclient/axios.config"
 
-const API_BOARD = "/api/board"
+const API_BOARD = new URL(
+  "/rest/v1/boards",
+  process.env.NEXT_PUBLIC_SUPABASE_URL
+)
 
-export const createBoard = async (requestBody: unknown) => {
-  try {
-    const res = await fetch(API_BOARD, {
-      method: "POST",
-      ...getHeaders(),
-      body: JSON.stringify(requestBody),
-    })
-    if (!res.ok) throw new Error()
-    return await res.json()
-  } catch (e) {
-    if (e instanceof Error) {
-      throw new Error(e.message)
-    }
-  }
+export const createBoard = async (requestBody: CreateBoardSchema) => {
+  API_BOARD.searchParams.set("select", "*")
+  const res = await queryClient.post<TBoards[]>(
+    API_BOARD.toString(),
+    requestBody
+  )
+  return res.data
 }
 
 export const getBoards = async () => {
-  const res = await axios.get<TBoards>(API_BOARD, {
-    ...getHeaders(),
-  })
+  const res = await queryClient.get<TBoards[]>(API_BOARD.toString())
   return res.data
 }
