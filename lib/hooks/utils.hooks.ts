@@ -1,24 +1,26 @@
-import { useApikey } from "@/store/persist.store"
+import { useAuthKey } from "@/store/persist.store"
 import { useAuth } from "@clerk/nextjs"
+import { useEffect } from "react"
 
 export const useToken = () => {
-  const { getToken, isLoaded, isSignedIn } = useAuth()
-  const { setApiKey, apiKey } = useApikey()
+  const { getToken, isLoaded } = useAuth()
+  const { setAuthKey, authKey } = useAuthKey()
 
-  async function fetchToken() {
-    console.log("fetch token is running...")
-    if (!isLoaded || !isSignedIn) return setApiKey(null)
-    try {
+  useEffect(() => {
+    let interval: NodeJS.Timeout
+
+    const retrieveToken = async () => {
       const token = await getToken({ template: "supabase" })
-      setApiKey(token)
-    } catch (e) {
-      if (e instanceof Error)
-        console.error("Error fetching the Clerk token\n", e.message)
-      setApiKey(null)
+      setAuthKey(token)
     }
-  }
 
-  fetchToken()
+    if (isLoaded) {
+      retrieveToken()
+      interval = setInterval(retrieveToken, 1 * 60 * 1000)
+    }
 
-  return { apiKey }
+    return () => clearInterval(interval)
+  }, [isLoaded, getToken, setAuthKey])
+
+  return { isLoaded, authKey }
 }

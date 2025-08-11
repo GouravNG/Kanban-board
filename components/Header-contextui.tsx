@@ -4,7 +4,6 @@ import { SignInButton, SignUpButton, UserButton, useUser } from "@clerk/nextjs"
 import { Button } from "./ui/button"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { useToken } from "@/lib/hooks/utils.hooks"
 
 const AuthUI = () => {
   return (
@@ -47,7 +46,6 @@ const DashboardUI = () => {
 
 const HeaderContextUI = () => {
   const { isSignedIn } = useUser()
-  useToken()
   const pathName = usePathname()
   const isHomePage = pathName === "/"
   const isDashBoardPage = pathName === "/dashboard"

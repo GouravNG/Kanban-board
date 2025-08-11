@@ -1,17 +1,18 @@
+"use client"
 import { create } from "zustand"
 import { persist } from "zustand/middleware"
 import { useShallow } from "zustand/shallow"
 
 type PersistStoreTypes = {
-  apiKey: string | null
-  setApiKey: (key: string | null) => void
+  authKey: string | null
+  setAuthKey: (key: string | null) => void
 }
 
 export const usePersistStore = create<PersistStoreTypes>()(
   persist(
     (set) => ({
-      apiKey: null,
-      setApiKey: (key) => set({ apiKey: key }),
+      authKey: null,
+      setAuthKey: (key) => set({ authKey: key }),
     }),
     {
       name: "zp-store",
@@ -19,7 +20,7 @@ export const usePersistStore = create<PersistStoreTypes>()(
   )
 )
 
-export const useApikey = () =>
+export const useAuthKey = () =>
   usePersistStore(
-    useShallow(({ apiKey, setApiKey }) => ({ apiKey, setApiKey }))
+    useShallow(({ authKey, setAuthKey }) => ({ authKey, setAuthKey }))
   )
