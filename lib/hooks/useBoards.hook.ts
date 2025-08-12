@@ -51,6 +51,6 @@ export const useBoardsActivity = () => {
   })
 }
 
-export const useBords = () => {
+export const useBoards = () => {
   return useQuery({ ...getBoardOption })
 }

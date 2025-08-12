@@ -1,5 +1,6 @@
 "use client"
 
+import BoardsView from "@/components/BoardsView"
 import DashBoardUtils from "@/components/DashBoardUtils"
 import DashBoardWidgets from "@/components/DashBoardWidgets"
 import { useUser } from "@clerk/nextjs"
@@ -26,6 +27,7 @@ const Dashboard = () => {
         <DashBoardUtils id={user?.id ?? ""} />
 
         {/* Boards */}
+        <BoardsView />
       </div>
     </main>
   )
