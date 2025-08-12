@@ -6,13 +6,11 @@ import {
 } from "@tanstack/react-query"
 import { createBoard, getBoards } from "../functions/boards.fn"
 import { CreateBoardPayload, TBoards } from "../types"
-import { useToken } from "./utils.hooks"
 import { toast } from "sonner"
 import { createColumnPayload } from "../schema"
 import { useCreateColumns } from "./useColumns.hook"
 
 export const useCreateBoard = () => {
-  useToken()
   const qc = useQueryClient()
   const { mutate } = useCreateColumns()
   return useMutation({
@@ -34,7 +32,6 @@ const getBoardOption = queryOptions({
 })
 
 export const useBoardsCount = () => {
-  useToken()
   return useQuery({
     ...getBoardOption,
     select: (data) => data.length,
@@ -42,7 +39,6 @@ export const useBoardsCount = () => {
 }
 
 export const useBoardsActivity = () => {
-  useToken()
   const oneWeekAgo = new Date()
   oneWeekAgo.setDate(oneWeekAgo.getDate() - 7)
   return useQuery({
@@ -56,6 +52,5 @@ export const useBoardsActivity = () => {
 }
 
 export const useBords = () => {
-  useToken()
   return useQuery({ ...getBoardOption })
 }
