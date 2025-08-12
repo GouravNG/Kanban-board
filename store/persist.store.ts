@@ -4,15 +4,16 @@ import { persist } from "zustand/middleware"
 import { useShallow } from "zustand/shallow"
 
 type PersistStoreTypes = {
-  authKey: string | null
-  setAuthKey: (key: string | null) => void
+  viewMode: "grid" | "list"
+  toggleViewMode: () => void
 }
 
 export const usePersistStore = create<PersistStoreTypes>()(
   persist(
     (set) => ({
-      authKey: null,
-      setAuthKey: (key) => set({ authKey: key }),
+      viewMode: "list",
+      toggleViewMode: () =>
+        set((s) => ({ viewMode: s.viewMode === "list" ? "grid" : "list" })),
     }),
     {
       name: "zp-store",
@@ -20,7 +21,7 @@ export const usePersistStore = create<PersistStoreTypes>()(
   )
 )
 
-export const useAuthKey = () =>
+export const useViewToggles = () =>
   usePersistStore(
-    useShallow(({ authKey, setAuthKey }) => ({ authKey, setAuthKey }))
+    useShallow(({ viewMode, toggleViewMode }) => ({ viewMode, toggleViewMode }))
   )

@@ -21,10 +21,12 @@ const Dashboard = () => {
       {/* Widgets */}
       <DashBoardWidgets />
 
-      {/* Utils */}
-      <DashBoardUtils id={user?.id ?? ""} />
+      <div className="mb-6 sm:mb-8">
+        {/* Utils */}
+        <DashBoardUtils id={user?.id ?? ""} />
 
-      {/* Boards */}
+        {/* Boards */}
+      </div>
     </main>
   )
 }
