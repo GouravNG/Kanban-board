@@ -22,7 +22,7 @@ export const useCreateBoard = () => {
           createColumnPayload(data[0].id, data[0].user_id)
       ),
     onSettled: () => qc.invalidateQueries({ queryKey: ["board"] }),
-    onError: () => toast("Something went wrong!!"),
+    onError: () => toast.error("Something went wrong!!"),
   })
 }
 

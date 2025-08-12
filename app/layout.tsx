@@ -31,7 +31,7 @@ export default function RootLayout({
         <body
           className={`${geistSans.variable} ${geistMono.className} antialiased min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 mx-1`}
         >
-          <Toaster />
+          <Toaster position={"top-right"} richColors />
           <Header />
           {children}
         </body>

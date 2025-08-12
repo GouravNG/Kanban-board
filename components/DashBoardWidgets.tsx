@@ -1,4 +1,4 @@
-import { KanbanIcon } from "lucide-react"
+import { KanbanIcon, Rocket } from "lucide-react"
 import { Card, CardContent } from "./ui/card"
 import { useBoardsCount, useBoardsActivity } from "@/lib/hooks"
 
@@ -6,12 +6,16 @@ type TCardWidget = {
   title: string
   value: string | number
   isLoading: boolean
+  color: string
+  Icon: React.ElementType
 }
 
 export const CardWidget: React.FC<TCardWidget> = ({
   title,
   value,
   isLoading,
+  color,
+  Icon,
 }) => {
   return (
     <Card>
@@ -29,8 +33,10 @@ export const CardWidget: React.FC<TCardWidget> = ({
               </p>
             )}
           </div>
-          <div className="h-10 w-10 sm:h-12 bg-blue-100 rounded-lg flex items-center justify-center">
-            <KanbanIcon className="h-5 w-5 sm:w-6 sm:h-6 text-blue-600" />
+          <div
+            className={`h-10 w-10 sm:h-12 ${color} rounded-lg flex items-center justify-center`}
+          >
+            {<Icon />}
           </div>
         </div>
       </CardContent>
@@ -52,6 +58,8 @@ const DashBoardWidgets = () => {
           title="Total Boards"
           value={boardsCount}
           key={"board-count"}
+          color="bg-blue-100"
+          Icon={KanbanIcon}
         />
       )}
       {recentActivity !== undefined && (
@@ -60,6 +68,8 @@ const DashBoardWidgets = () => {
           title="Recent Activities"
           value={recentActivity}
           key={"recent-activity"}
+          color="bg-green-100"
+          Icon={Rocket}
         />
       )}
     </div>
