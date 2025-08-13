@@ -9,9 +9,11 @@ import { CreateBoardPayload, TBoards } from "../types"
 import { toast } from "sonner"
 import { createColumnPayload } from "../schema"
 import { useCreateColumns } from "./useColumns.hook"
+import { useCreateBoardForm } from "@/store/common.store"
 
 export const useCreateBoard = () => {
   const qc = useQueryClient()
+  const { toggleIsCreatingBoard } = useCreateBoardForm()
   const { mutate } = useCreateColumns()
   return useMutation({
     mutationKey: ["board"],
@@ -21,7 +23,10 @@ export const useCreateBoard = () => {
         requestPayload.columnDetails ??
           createColumnPayload(data[0].id, data[0].user_id)
       ),
-    onSettled: () => qc.invalidateQueries({ queryKey: ["board"] }),
+    onSettled: () => {
+      toggleIsCreatingBoard()
+      qc.invalidateQueries({ queryKey: ["board"] })
+    },
     onError: () => toast.error("Something went wrong!!"),
   })
 }

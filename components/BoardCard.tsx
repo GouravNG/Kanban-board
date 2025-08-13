@@ -15,7 +15,7 @@ export const BoardsCard = ({ board }: { board: TBoards }) => {
       <Card className="hover:shadow-lg transition-shadow cursor-pointer group">
         <CardHeader className="pb-3">
           <div className="flex items-center justify-between">
-            <div className={`w-4 h-4 rounded-full bg-green-400`} />
+            <div className={`w-4 h-4 rounded-full ${board.color}`} />
             <Badge variant={"secondary"} className="text-xs">
               New
             </Badge>
@@ -23,7 +23,9 @@ export const BoardsCard = ({ board }: { board: TBoards }) => {
         </CardHeader>
 
         <CardContent className="p-4 sm:p-6">
-          <CardTitle className="text-base  sm:text-lg group-hover:text-green-600  transition-colors">
+          <CardTitle
+            className={`text-base  sm:text-lg group-hover:text-blue-500 transition-colors`}
+          >
             {board.title}
           </CardTitle>
 

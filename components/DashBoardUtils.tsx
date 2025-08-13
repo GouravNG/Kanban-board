@@ -4,12 +4,11 @@ import {
   FilterIcon,
   Grid3X3,
   List,
-  LoaderCircle,
   PlusCircleIcon,
   SearchIcon,
 } from "lucide-react"
 import { Input } from "./ui/input"
-import { useCreateBoard } from "@/lib/hooks"
+import { useCreateBoardForm } from "@/store/common.store"
 
 const SearchBar = () => {
   return (
@@ -47,8 +46,8 @@ const ViewModes = () => {
   )
 }
 
-const DashBoardUtils = ({ id }: { id: string }) => {
-  const { mutate, isPending } = useCreateBoard()
+const DashBoardUtils = () => {
+  const { toggleIsCreatingBoard } = useCreateBoardForm()
   return (
     <>
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4 sm:mb-6 space-y-4 sm:space-y-0">
@@ -56,7 +55,7 @@ const DashBoardUtils = ({ id }: { id: string }) => {
           <h2 className="text-xl sm:text-2xl font-bold text-gray-900">
             Your Boards
           </h2>
-          <p className="text-gray-600">Manage your projects and task</p>
+          <p className="text-gray-600 text-sm">Manage your projects and task</p>
         </div>
 
         {/* Buttons */}
@@ -65,19 +64,9 @@ const DashBoardUtils = ({ id }: { id: string }) => {
           <Button variant={"outline"} size={"sm"}>
             <FilterIcon /> Filter
           </Button>
-          <Button
-            size={"sm"}
-            disabled={isPending}
-            // onClick={() => mutate({ boardDetails: {} })}
-          >
-            {isPending ? (
-              <LoaderCircle className="animate-spin" />
-            ) : (
-              <>
-                <PlusCircleIcon />
-                Create Board
-              </>
-            )}
+          <Button size={"sm"} onClick={() => toggleIsCreatingBoard()}>
+            <PlusCircleIcon />
+            Create Board
           </Button>
         </div>
       </div>
