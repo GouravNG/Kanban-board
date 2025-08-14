@@ -49,6 +49,7 @@ const HeaderContextUI = () => {
   const pathName = usePathname()
   const isHomePage = pathName === "/"
   const isDashBoardPage = pathName === "/dashboard"
+  const isBoardsPage = /^\/boards\/.+/.test(pathName)
 
   return (
     <>
@@ -56,6 +57,7 @@ const HeaderContextUI = () => {
         <div className="flex flex-col sm:flex-row space-y-2 items-baseline space-x-2">
           {isHomePage && <HomeUI />}
           {isDashBoardPage && <DashboardUI />}
+          {isBoardsPage && <DashboardUI />}
         </div>
       ) : (
         <AuthUI />

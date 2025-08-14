@@ -1,7 +1,7 @@
 import { CreateBoardSchema } from "../schema/board.schema"
-import { CreateColumnSchema } from "./column.types"
+import { CreateColumnSchema, TColumn } from "./column.types"
 
-export type { CreateBoardSchema } from "@/lib/schema"
+export type { CreateBoardSchema, UpdateBoardSchema } from "@/lib/schema"
 
 export type CreateBoardPayload = {
   boardDetails: CreateBoardSchema
@@ -15,5 +15,9 @@ export type TBoards = {
   title: string
   user_id: string
   description: string
-  color: string
+  color: CreateBoardSchema["color"]
 }
+
+export type TBoardById = {
+  columns: TColumn[]
+} & TBoards

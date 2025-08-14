@@ -4,12 +4,17 @@ import {
   useQuery,
   useQueryClient,
 } from "@tanstack/react-query"
-import { createBoard, getBoards } from "../functions/boards.fn"
+import {
+  createBoard,
+  getBoardById,
+  getBoards,
+  updateBoard,
+} from "../functions/boards.fn"
 import { CreateBoardPayload, TBoards } from "../types"
 import { toast } from "sonner"
-import { createColumnPayload } from "../schema"
+import { createColumnPayload, UpdateBoardSchema } from "../schema"
 import { useCreateColumns } from "./useColumns.hook"
-import { useCreateBoardForm } from "@/store/common.store"
+import { useCreateBoardForm, useEdit } from "@/store/common.store"
 
 export const useCreateBoard = () => {
   const qc = useQueryClient()
@@ -58,4 +63,30 @@ export const useBoardsActivity = () => {
 
 export const useBoards = () => {
   return useQuery({ ...getBoardOption })
+}
+
+export const useUpdateBoard = (id: string) => {
+  const qc = useQueryClient()
+  const { toggleIsEditing } = useEdit()
+  return useMutation({
+    mutationKey: ["board"],
+    mutationFn: (payload: UpdateBoardSchema) => updateBoard(payload, id),
+    onSuccess: () => {
+      toggleIsEditing()
+      toast.success("Board updated successfully")
+    },
+    onError: () => toast.error("Something went wrong while updating the board"),
+    onSettled: () => {
+      qc.invalidateQueries({ queryKey: ["board", id] })
+      qc.invalidateQueries({ queryKey: ["board"] })
+    },
+  })
+}
+
+export const useBoardById = (id: string) => {
+  return useQuery({
+    queryKey: ["board", id],
+    queryFn: () => getBoardById(id),
+    select: (data) => data[0],
+  })
 }

@@ -1,3 +1,4 @@
+"use client"
 import { Button } from "../ui/button"
 import {
   Dialog,
@@ -14,51 +15,53 @@ import {
   FormLabel,
   FormMessage,
 } from "../ui/form"
-import { useCreateBoardForm } from "@/store/common.store"
+import { useEdit } from "@/store/common.store"
 import { useForm } from "react-hook-form"
-import { useCreateBoard } from "@/lib/hooks"
+import { useUpdateBoard } from "@/lib/hooks"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { CreateBoardSchema, createBoardSchema } from "@/lib/schema"
 import { LoaderCircleIcon, PlusCircleIcon } from "lucide-react"
 import { Input } from "../ui/input"
 import { RadioGroup, RadioGroupItem } from "../ui/radio-group"
 import { colors } from "@/lib/colors"
+import { UpdateBoardSchema } from "@/lib/types"
+import { updateBoardSchema } from "@/lib/schema"
 
-const CreateBoardForm = ({ user_id }: { user_id: string }) => {
-  const { isCreatingBoard, toggleIsCreatingBoard } = useCreateBoardForm()
-  const { mutate, isPending } = useCreateBoard()
+const UpdateBoardForm = ({
+  defaultValues,
+  id,
+}: {
+  defaultValues: UpdateBoardSchema
+  id: string
+}) => {
+  const { isEditing, toggleIsEditing } = useEdit()
+  const { mutate, isPending } = useUpdateBoard(id)
 
-  const form = useForm<CreateBoardSchema>({
-    resolver: zodResolver(createBoardSchema),
-    defaultValues: {
-      color: "bg-amber-500",
-      description: "",
-      title: "",
-      user_id: user_id ?? "",
-    },
+  const form = useForm<UpdateBoardSchema>({
+    resolver: zodResolver(updateBoardSchema),
+    defaultValues,
   })
 
-  const onSubmit = (boardsPayload: CreateBoardSchema) => {
-    mutate({ boardDetails: boardsPayload })
+  const onSubmit = (boardsPayload: UpdateBoardSchema) => {
+    mutate(boardsPayload)
     form.reset()
   }
 
   const handleClose = () => {
-    toggleIsCreatingBoard()
+    toggleIsEditing()
     form.reset()
   }
 
   return (
     <Dialog
-      open={isCreatingBoard}
+      open={isEditing}
       onOpenChange={(open) => {
         if (!open) form.reset()
-        toggleIsCreatingBoard()
+        toggleIsEditing()
       }}
     >
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Create Board</DialogTitle>
+          <DialogTitle>Update Board</DialogTitle>
         </DialogHeader>
 
         <Form {...form}>
@@ -148,7 +151,7 @@ const CreateBoardForm = ({ user_id }: { user_id: string }) => {
                 {!isPending ? (
                   <>
                     <PlusCircleIcon />
-                    Create
+                    Update
                   </>
                 ) : (
                   <LoaderCircleIcon className="animate-spin" />
@@ -161,4 +164,4 @@ const CreateBoardForm = ({ user_id }: { user_id: string }) => {
     </Dialog>
   )
 }
-export default CreateBoardForm
+export default UpdateBoardForm
