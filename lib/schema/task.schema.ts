@@ -8,8 +8,8 @@ export const createTaskSchema = z.object({
   column_id: z.number(),
   description: z.string().optional(),
   assignee: z.string(),
-  due_date: z.string(),
-  priority: z.literal(["low", "medium", "high"]),
+  due_date: z.date("Please select due date"),
+  priority: z.enum(["P1", "P2", "P3"], "Please select priority"),
 })
 
 export type CreateTaskSchema = z.infer<typeof createTaskSchema>
