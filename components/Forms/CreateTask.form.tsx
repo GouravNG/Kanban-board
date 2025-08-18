@@ -21,17 +21,21 @@ import {
 } from "../ui/select"
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover"
 import { Button } from "../ui/button"
-import { Calendar1, PlusCircle } from "lucide-react"
+import { Calendar1, Loader2, PlusCircle } from "lucide-react"
 import { Calendar } from "../ui/calendar"
 import { DialogClose, DialogFooter } from "../ui/dialog"
 import { TaskPriorities } from "@/lib/types"
+import { useCreateTask } from "@/lib/hooks"
 
 type TCreateTaskForm = {
   user_id: string
   c_id: number
+  b_id: number
 }
 
-const CreateTaskForm: React.FC<TCreateTaskForm> = ({ user_id, c_id }) => {
+const CreateTaskForm: React.FC<TCreateTaskForm> = ({ user_id, c_id, b_id }) => {
+  const { mutate, isPending } = useCreateTask(b_id)
+
   const form = useForm<CreateTaskSchema>({
     resolver: zodResolver(createTaskSchema),
     defaultValues: {
@@ -42,7 +46,7 @@ const CreateTaskForm: React.FC<TCreateTaskForm> = ({ user_id, c_id }) => {
   })
 
   const onSubmit = (data: CreateTaskSchema) => {
-    console.log("Form Data:", data)
+    mutate(data)
   }
 
   const priorityClrs = (clr: TaskPriorities) => {
@@ -183,8 +187,14 @@ const CreateTaskForm: React.FC<TCreateTaskForm> = ({ user_id, c_id }) => {
             </Button>
           </DialogClose>
           <Button type="submit">
-            <PlusCircle className="mr-1" />
-            Create
+            {isPending ? (
+              <Loader2 className="animate-spin" />
+            ) : (
+              <>
+                <PlusCircle className="mr-1" />
+                Create
+              </>
+            )}
           </Button>
         </DialogFooter>
       </form>

@@ -3,6 +3,7 @@ import {
   useMutation,
   useQuery,
   useQueryClient,
+  useSuspenseQuery,
 } from "@tanstack/react-query"
 import {
   createBoard,
@@ -83,10 +84,22 @@ export const useUpdateBoard = (id: string) => {
   })
 }
 
-export const useBoardById = (id: string) => {
-  return useQuery({
+const boardsByIdOptions = (id: string) =>
+  queryOptions({
     queryKey: ["board", id],
     queryFn: () => getBoardById(id),
     select: (data) => data[0],
+  })
+
+export const useBoardById = (id: string) => {
+  return useQuery({
+    ...boardsByIdOptions(id),
+  })
+}
+
+export const useGetAllColumnIds = (id: string) => {
+  return useQuery({
+    ...boardsByIdOptions(id),
+    select: (d) => d.map((i) => i.columns.map(({ id }) => id))[0],
   })
 }

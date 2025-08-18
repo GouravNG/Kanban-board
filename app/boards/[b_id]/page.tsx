@@ -1,5 +1,6 @@
 "use client"
 
+import Column from "@/components/Columns"
 import CreateTaskForm from "@/components/Forms/CreateTask.form"
 import UpdateBoardForm from "@/components/Forms/UpdateBoard.form"
 import { Button } from "@/components/ui/button"
@@ -10,8 +11,15 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog"
-import { useBoardById } from "@/lib/hooks"
+import {
+  taskOptions,
+  useBoardById,
+  useCreateColumns,
+  useGetAllColumnIds,
+  useTasksByColumnId,
+} from "@/lib/hooks"
 import { useEdit } from "@/store/common.store"
+// import { useQueries } from "@tanstack/react-query"
 import { ArrowLeft, Edit, Filter, PlusIcon, Trash2 } from "lucide-react"
 import Link from "next/link"
 import { use } from "react"
@@ -19,10 +27,16 @@ import { use } from "react"
 const BoardPage = ({ params }: { params: Promise<{ b_id: string }> }) => {
   const { b_id } = use(params)
   const { data, isLoading, error } = useBoardById(b_id)
+  const { data: cls } = useGetAllColumnIds(b_id)
+  // console.log(cls)
+  const res = useTasksByColumnId(cls ?? [])
+
   const { toggleIsEditing } = useEdit()
+
   if (isLoading) return <h1>Loading...</h1>
   if (error) return <h1>Something went wrong!!</h1>
-  if (data && data !== undefined)
+  if (data && data !== undefined) {
+    const c_id = data.columns[0].id
     return (
       <div className="min-h-screen">
         {/* Names */}
@@ -71,9 +85,18 @@ const BoardPage = ({ params }: { params: Promise<{ b_id: string }> }) => {
                   <DialogTitle>Add Task</DialogTitle>
                 </DialogHeader>
 
-                <CreateTaskForm c_id={1} user_id="" />
+                <CreateTaskForm
+                  c_id={c_id}
+                  user_id={data.user_id}
+                  b_id={Number(b_id)}
+                />
               </DialogContent>
             </Dialog>
+          </div>
+
+          {/* task columsn */}
+          <div className="flex flex-col lg:flex-row lg:space-x-6 lg:overflow-x-auto lg:pb-6 lg:px-2 lg:mx-2 space-y-4 lg:space-y-0">
+            {<Column data={res} />}
           </div>
         </main>
 
@@ -89,5 +112,7 @@ const BoardPage = ({ params }: { params: Promise<{ b_id: string }> }) => {
         />
       </div>
     )
+  }
 }
 export default BoardPage
+1
