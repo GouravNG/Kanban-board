@@ -1,20 +1,15 @@
-import type { CreateTaskSchema } from "@/lib/schema"
+import { TGetTask } from "../schema"
 
-export type { CreateTaskSchema } from "@/lib/schema"
+// From Schema
+export type {
+  TCreateTask,
+  TUpdateColumn,
+  TGetColumn,
+  TReorderTask,
+} from "@/lib/schema"
 
-export type TaskPriorities = CreateTaskSchema["priority"]
-
-export type Tasks = {
-  id: number
-  title: string
-  assignee: string
-  due_date: string
-  priority: TaskPriorities
-  column_id: number
-  created_at: string
-  sort_order: number
-  description: string
-}
+// Customs
+export type TaskPriorities = TGetTask["priority"]
 
 export type TResponseTask = {
   id: number
@@ -23,5 +18,5 @@ export type TResponseTask = {
   title: string
   sort_order: number
   user_id: string
-  tasks: Tasks[]
+  tasks: TGetTask[]
 }

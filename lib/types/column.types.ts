@@ -1,10 +1,9 @@
-export type { CreateColumnSchema } from "@/lib/schema"
+// From Schema
+export type {
+  TCreateColumn,
+  TUpdateColumn,
+  TGetColumn,
+  TReorderColumn,
+} from "@/lib/schema"
 
-export type TColumn = {
-  id: number
-  title: string
-  user_id: string
-  board_id: number
-  created_at: string
-  sort_order: number
-}
+// Customs

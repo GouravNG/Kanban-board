@@ -1,23 +1,10 @@
-import { CreateBoardSchema } from "../schema/board.schema"
-import { CreateColumnSchema, TColumn } from "./column.types"
+import { TGetBoard } from "../schema/board.schema"
+import { TGetColumn } from "./column.types"
 
-export type { CreateBoardSchema, UpdateBoardSchema } from "@/lib/schema"
+// From Schema
+export type { TCreateBoard, TUpdateBoard, TGetBoard } from "@/lib/schema"
 
-export type CreateBoardPayload = {
-  boardDetails: CreateBoardSchema
-  columnDetails?: CreateColumnSchema
-}
-
-export type TBoards = {
-  id: number
-  created_at: string
-  updated_at: string
-  title: string
-  user_id: string
-  description: string
-  color: CreateBoardSchema["color"]
-}
-
+// Customs
 export type TBoardById = {
-  columns: TColumn[]
-} & TBoards
+  columns: TGetColumn[]
+} & TGetBoard
