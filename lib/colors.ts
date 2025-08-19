@@ -1,3 +1,5 @@
+import { TaskPriorities } from "./types"
+
 export const colors = [
   "bg-stone-500",
   "bg-red-500",
@@ -18,3 +20,16 @@ export const colors = [
   "bg-pink-500",
   "bg-rose-500",
 ] as const
+
+export const getPriorityColors = (clr: TaskPriorities) => {
+  switch (clr) {
+    case "P1":
+      return "bg-red-500"
+    case "P2":
+      return "bg-yellow-500"
+    case "P3":
+      return "bg-green-500"
+    default:
+      return "bg-green-500"
+  }
+}

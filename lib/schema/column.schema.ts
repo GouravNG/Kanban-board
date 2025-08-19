@@ -1,6 +1,8 @@
 import z from "zod"
 
-export const createColumnsSchema = z.object({
+// Base zod schema
+const ColumnBaseSchema = z.object({
+  id: z.number(),
   board_id: z.number(),
   title: z
     .string()
@@ -8,30 +10,22 @@ export const createColumnsSchema = z.object({
     .max(12, "Maximum length allowed from title is 12 letters only."),
   sort_order: z.number(),
   user_id: z.string(),
+  created_at: z.string(),
+  updated_at: z.string(),
 })
 
-export const createColumnPayload = (
-  board_id: number,
-  user_id: string
-): CreateColumnSchema[] => [
-  {
-    board_id,
-    title: "Pending",
-    sort_order: 0,
-    user_id,
-  },
-  {
-    board_id,
-    title: "Inprogress",
-    sort_order: 1,
-    user_id,
-  },
-  {
-    board_id,
-    title: "Completed",
-    sort_order: 2,
-    user_id,
-  },
-]
+// Create Column Schema
+export const createColumnsSchema = ColumnBaseSchema.pick({
+  title: true,
+  sort_order: true,
+  user_id: true,
+  board_id: true,
+})
 
-export type CreateColumnSchema = z.infer<typeof createColumnsSchema>
+// Update Column Schema
+export const updateColumnsSchema = createColumnsSchema.pick({ title: true })
+
+export type TGetColumn = z.infer<typeof ColumnBaseSchema>
+export type TCreateColumn = z.infer<typeof createColumnsSchema>
+export type TUpdateColumn = z.infer<typeof updateColumnsSchema>
+export type TReorderColumn = Pick<TCreateColumn, "sort_order">
