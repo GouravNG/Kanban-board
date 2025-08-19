@@ -1,5 +1,5 @@
 "use client"
-import { createTaskSchema, CreateTaskSchema } from "@/lib/schema"
+import { createTaskSchema, TCreateTask } from "@/lib/schema"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import {
@@ -36,17 +36,19 @@ type TCreateTaskForm = {
 const CreateTaskForm: React.FC<TCreateTaskForm> = ({ user_id, c_id, b_id }) => {
   const { mutate, isPending } = useCreateTask(b_id)
 
-  const form = useForm<CreateTaskSchema>({
+  const form = useForm<TCreateTask>({
     resolver: zodResolver(createTaskSchema),
     defaultValues: {
       assignee: user_id,
       column_id: c_id,
       title: "",
+      sort_order: 0,
     },
   })
 
-  const onSubmit = (data: CreateTaskSchema) => {
+  const onSubmit = (data: TCreateTask) => {
     mutate(data)
+    form.reset()
   }
 
   const priorityClrs = (clr: TaskPriorities) => {

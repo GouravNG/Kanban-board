@@ -1,10 +1,12 @@
 import { columnsURL } from "../endpoints"
 import queryClient from "../queryclient/axios.config"
-import { CreateColumnSchema } from "../schema"
+import { TCreateColumn, TGetColumn } from "../schema"
 
-export const createColumn = async (
-  requestBody: CreateColumnSchema | CreateColumnSchema[]
-) => {
-  const res = await queryClient.post(columnsURL.url_CreateCol(), requestBody)
+// POST
+export const createColumn = async (requestBody: TCreateColumn) => {
+  const res = await queryClient.post<TGetColumn[]>(
+    columnsURL.url_CreateCol(),
+    requestBody
+  )
   return res.data
 }

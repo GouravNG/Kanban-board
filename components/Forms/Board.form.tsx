@@ -1,6 +1,7 @@
 import { Button } from "../ui/button"
 import {
   Dialog,
+  DialogClose,
   DialogContent,
   DialogFooter,
   DialogHeader,
@@ -14,21 +15,20 @@ import {
   FormLabel,
   FormMessage,
 } from "../ui/form"
-import { useCreateBoardForm } from "@/store/common.store"
 import { useForm } from "react-hook-form"
 import { useCreateBoard } from "@/lib/hooks"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { CreateBoardSchema, createBoardSchema } from "@/lib/schema"
+import { TCreateBoard, createBoardSchema } from "@/lib/schema"
 import { LoaderCircleIcon, PlusCircleIcon } from "lucide-react"
 import { Input } from "../ui/input"
 import { RadioGroup, RadioGroupItem } from "../ui/radio-group"
 import { colors } from "@/lib/colors"
+import { DialogTrigger } from "@radix-ui/react-dialog"
 
 const CreateBoardForm = ({ user_id }: { user_id: string }) => {
-  const { isCreatingBoard, toggleIsCreatingBoard } = useCreateBoardForm()
   const { mutate, isPending } = useCreateBoard()
 
-  const form = useForm<CreateBoardSchema>({
+  const form = useForm<TCreateBoard>({
     resolver: zodResolver(createBoardSchema),
     defaultValues: {
       color: "bg-amber-500",
@@ -38,24 +38,22 @@ const CreateBoardForm = ({ user_id }: { user_id: string }) => {
     },
   })
 
-  const onSubmit = (boardsPayload: CreateBoardSchema) => {
-    mutate({ boardDetails: boardsPayload })
-    form.reset()
-  }
-
-  const handleClose = () => {
-    toggleIsCreatingBoard()
+  const onSubmit = (payload: TCreateBoard) => {
+    mutate(payload)
     form.reset()
   }
 
   return (
-    <Dialog
-      open={isCreatingBoard}
-      onOpenChange={(open) => {
-        if (!open) form.reset()
-        toggleIsCreatingBoard()
-      }}
-    >
+    <Dialog>
+      {/* Button to trigger the form */}
+      <DialogTrigger asChild>
+        <Button size={"sm"}>
+          <PlusCircleIcon />
+          Create Board
+        </Button>
+      </DialogTrigger>
+
+      {/* Content */}
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Create Board</DialogTitle>
@@ -141,9 +139,12 @@ const CreateBoardForm = ({ user_id }: { user_id: string }) => {
 
             {/* Buttons */}
             <DialogFooter className="flex flex-row justify-center gap-8">
-              <Button variant={"outline"} onClick={handleClose}>
-                Cancel
-              </Button>
+              {/* Closing the form */}
+              <DialogClose asChild>
+                <Button variant={"outline"}>Cancel</Button>
+              </DialogClose>
+
+              {/* Submitting the form */}
               <Button type="submit">
                 {!isPending ? (
                   <>

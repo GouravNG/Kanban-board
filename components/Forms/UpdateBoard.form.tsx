@@ -2,10 +2,12 @@
 import { Button } from "../ui/button"
 import {
   Dialog,
+  DialogClose,
   DialogContent,
   DialogFooter,
   DialogHeader,
   DialogTitle,
+  DialogTrigger,
 } from "../ui/dialog"
 import {
   Form,
@@ -15,50 +17,45 @@ import {
   FormLabel,
   FormMessage,
 } from "../ui/form"
-import { useEdit } from "@/store/common.store"
+
 import { useForm } from "react-hook-form"
 import { useUpdateBoard } from "@/lib/hooks"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { LoaderCircleIcon, PlusCircleIcon } from "lucide-react"
+import { Edit, LoaderCircleIcon, PlusCircleIcon } from "lucide-react"
 import { Input } from "../ui/input"
 import { RadioGroup, RadioGroupItem } from "../ui/radio-group"
 import { colors } from "@/lib/colors"
-import { UpdateBoardSchema } from "@/lib/types"
-import { updateBoardSchema } from "@/lib/schema"
+import { TUpdateBoard, updateBoardSchema } from "@/lib/schema"
 
 const UpdateBoardForm = ({
   defaultValues,
   id,
 }: {
-  defaultValues: UpdateBoardSchema
+  defaultValues: TUpdateBoard
   id: string
 }) => {
-  const { isEditing, toggleIsEditing } = useEdit()
   const { mutate, isPending } = useUpdateBoard(id)
 
-  const form = useForm<UpdateBoardSchema>({
+  const form = useForm<TUpdateBoard>({
     resolver: zodResolver(updateBoardSchema),
     defaultValues,
   })
 
-  const onSubmit = (boardsPayload: UpdateBoardSchema) => {
+  const onSubmit = (boardsPayload: TUpdateBoard) => {
     mutate(boardsPayload)
     form.reset()
   }
 
-  const handleClose = () => {
-    toggleIsEditing()
-    form.reset()
-  }
-
   return (
-    <Dialog
-      open={isEditing}
-      onOpenChange={(open) => {
-        if (!open) form.reset()
-        toggleIsEditing()
-      }}
-    >
+    <Dialog>
+      {/* Dialog Trigger */}
+      <DialogTrigger asChild>
+        <Button size={"sm"}>
+          <Edit />
+        </Button>
+      </DialogTrigger>
+
+      {/* Dialog Content */}
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Update Board</DialogTitle>
@@ -144,9 +141,12 @@ const UpdateBoardForm = ({
 
             {/* Buttons */}
             <DialogFooter className="flex flex-row justify-center gap-8">
-              <Button variant={"outline"} onClick={handleClose}>
-                Cancel
-              </Button>
+              {/* Closing of dialog */}
+              <DialogClose asChild>
+                <Button variant={"outline"}>Cancel</Button>
+              </DialogClose>
+
+              {/* Submit of form */}
               <Button type="submit">
                 {!isPending ? (
                   <>

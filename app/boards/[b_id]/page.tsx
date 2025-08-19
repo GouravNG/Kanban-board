@@ -12,15 +12,12 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog"
 import {
-  taskOptions,
   useBoardById,
-  useCreateColumns,
   useGetAllColumnIds,
   useTasksByColumnId,
 } from "@/lib/hooks"
-import { useEdit } from "@/store/common.store"
-// import { useQueries } from "@tanstack/react-query"
-import { ArrowLeft, Edit, Filter, PlusIcon, Trash2 } from "lucide-react"
+
+import { ArrowLeft, Filter, PlusIcon, Trash2 } from "lucide-react"
 import Link from "next/link"
 import { use } from "react"
 
@@ -28,10 +25,8 @@ const BoardPage = ({ params }: { params: Promise<{ b_id: string }> }) => {
   const { b_id } = use(params)
   const { data, isLoading, error } = useBoardById(b_id)
   const { data: cls } = useGetAllColumnIds(b_id)
-  // console.log(cls)
-  const res = useTasksByColumnId(cls ?? [])
 
-  const { toggleIsEditing } = useEdit()
+  const res = useTasksByColumnId(cls ?? [])
 
   if (isLoading) return <h1>Loading...</h1>
   if (error) return <h1>Something went wrong!!</h1>
@@ -56,9 +51,17 @@ const BoardPage = ({ params }: { params: Promise<{ b_id: string }> }) => {
             <Button size={"sm"} variant={"outline"}>
               <Filter />
             </Button>
-            <Button size={"sm"} onClick={() => toggleIsEditing()}>
-              <Edit />
-            </Button>
+
+            {/* Edit the board */}
+            <UpdateBoardForm
+              id={b_id}
+              defaultValues={{
+                color: data.color,
+                description: data.description,
+                title: data.title,
+              }}
+            />
+
             <Button size={"sm"} variant={"destructive"}>
               <Trash2 />
             </Button>
@@ -99,17 +102,6 @@ const BoardPage = ({ params }: { params: Promise<{ b_id: string }> }) => {
             {<Column data={res} />}
           </div>
         </main>
-
-        {/* Dialogs */}
-        <UpdateBoardForm
-          id={b_id}
-          defaultValues={{
-            user_id: data.user_id,
-            color: data.color,
-            description: data.description,
-            title: data.title,
-          }}
-        />
       </div>
     )
   }

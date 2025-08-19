@@ -14,7 +14,6 @@ const TaskBaseSchema = z.object({
   column_id: z.number(),
   sort_order: z.number(),
   description: z.string().optional(),
-  user_id: z.string(),
 })
 
 // Create Task Schema
@@ -24,7 +23,7 @@ export const createTaskSchema = TaskBaseSchema.pick({
   priority: true,
   due_date: true,
   column_id: true,
-  user_id: true,
+  assignee: true,
   sort_order: true,
 })
 

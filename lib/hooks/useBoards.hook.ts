@@ -66,6 +66,7 @@ export const useBoards = () => {
 
 // PATCH
 export const useUpdateBoard = (id: string) => {
+  const { dismiss } = useDismissDialog()
   const qc = useQueryClient()
   return useMutation({
     mutationKey: ["board"],
@@ -75,6 +76,7 @@ export const useUpdateBoard = (id: string) => {
     onSettled: () => {
       qc.invalidateQueries({ queryKey: ["board", id] })
       qc.invalidateQueries({ queryKey: ["board"] })
+      dismiss()
     },
   })
 }
@@ -84,13 +86,13 @@ const boardsByIdOptions = (id: string) =>
   queryOptions({
     queryKey: ["board", id],
     queryFn: () => getBoardById(id),
-    select: (data) => data[0],
   })
 
 // GET
 export const useBoardById = (id: string) => {
   return useQuery({
     ...boardsByIdOptions(id),
+    select: (data) => data[0],
   })
 }
 
