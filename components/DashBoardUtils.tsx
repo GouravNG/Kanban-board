@@ -1,14 +1,8 @@
 import { useViewToggles } from "@/store/persist.store"
 import { Button } from "./ui/button"
-import {
-  FilterIcon,
-  Grid3X3,
-  List,
-  PlusCircleIcon,
-  SearchIcon,
-} from "lucide-react"
+import { FilterIcon, Grid3X3, List, SearchIcon } from "lucide-react"
 import { Input } from "./ui/input"
-import { useCreateBoardForm } from "@/store/common.store"
+import CreateBoardForm from "./Forms/Board.form"
 
 const SearchBar = () => {
   return (
@@ -46,8 +40,7 @@ const ViewModes = () => {
   )
 }
 
-const DashBoardUtils = () => {
-  const { toggleIsCreatingBoard } = useCreateBoardForm()
+const DashBoardUtils = ({ userId }: { userId: string }) => {
   return (
     <>
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4 sm:mb-6 space-y-4 sm:space-y-0">
@@ -64,10 +57,7 @@ const DashBoardUtils = () => {
           <Button variant={"outline"} size={"sm"}>
             <FilterIcon /> Filter
           </Button>
-          <Button size={"sm"} onClick={() => toggleIsCreatingBoard()}>
-            <PlusCircleIcon />
-            Create Board
-          </Button>
+          <CreateBoardForm user_id={userId} />
         </div>
       </div>
 

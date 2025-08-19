@@ -3,13 +3,12 @@
 import BoardsView from "@/components/BoardsView"
 import DashBoardUtils from "@/components/DashBoardUtils"
 import DashBoardWidgets from "@/components/DashBoardWidgets"
-import CreateBoardForm from "@/components/Forms/Board.form"
 import { useUser } from "@clerk/nextjs"
 
 const Dashboard = () => {
-  const { user, isLoaded } = useUser()
+  const { user, isLoaded, isSignedIn } = useUser()
   if (!isLoaded || user === undefined) return <h1>Loading..</h1>
-  if (isLoaded && user !== undefined)
+  if (isLoaded && user !== undefined && isSignedIn)
     return (
       <main className="container mx-auto p-4 sm:py-6">
         <div className="mb-6 sm:mb-8">
@@ -28,14 +27,11 @@ const Dashboard = () => {
 
         <div className="mb-6 sm:mb-8">
           {/* Utils */}
-          <DashBoardUtils />
+          <DashBoardUtils userId={user.id} />
 
           {/* Boards */}
           <BoardsView />
-
-          {/* Forms */}
         </div>
-        {<CreateBoardForm user_id={user?.id ?? ""} />}
       </main>
     )
 }

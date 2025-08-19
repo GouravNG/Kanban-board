@@ -3,43 +3,39 @@ import {
   useMutation,
   useQuery,
   useQueryClient,
-  useSuspenseQuery,
 } from "@tanstack/react-query"
+
 import {
   createBoard,
   getBoardById,
   getBoards,
   updateBoard,
 } from "../functions/boards.fn"
-import { CreateBoardPayload, TBoards } from "../types"
-import { toast } from "sonner"
-import { createColumnPayload, UpdateBoardSchema } from "../schema"
-import { useCreateColumns } from "./useColumns.hook"
-import { useCreateBoardForm, useEdit } from "@/store/common.store"
 
+import { toast } from "sonner"
+import { TUpdateBoard } from "../types"
+import useDismissDialog from "./useDismissDialog"
+
+// POST
 export const useCreateBoard = () => {
   const qc = useQueryClient()
-  const { toggleIsCreatingBoard } = useCreateBoardForm()
-  const { mutate } = useCreateColumns()
+  const { dismiss } = useDismissDialog()
   return useMutation({
     mutationKey: ["board"],
-    mutationFn: (body: CreateBoardPayload) => createBoard(body.boardDetails),
-    onSuccess: (data: TBoards[], requestPayload) =>
-      mutate(
-        requestPayload.columnDetails ??
-          createColumnPayload(data[0].id, data[0].user_id)
-      ),
-    onSettled: () => {
-      toggleIsCreatingBoard()
-      qc.invalidateQueries({ queryKey: ["board"] })
-    },
+    mutationFn: createBoard,
+    onSuccess: () => toast.success("New Board Created Successfully"),
     onError: () => toast.error("Something went wrong!!"),
+    onSettled: () => {
+      qc.invalidateQueries({ queryKey: ["board"] })
+      dismiss()
+    },
   })
 }
 
+// GET
 const getBoardOption = queryOptions({
   queryKey: ["board"],
-  queryFn: () => getBoards(),
+  queryFn: getBoards,
 })
 
 export const useBoardsCount = () => {
@@ -49,6 +45,7 @@ export const useBoardsCount = () => {
   })
 }
 
+// GET
 export const useBoardsActivity = () => {
   const oneWeekAgo = new Date()
   oneWeekAgo.setDate(oneWeekAgo.getDate() - 7)
@@ -62,20 +59,18 @@ export const useBoardsActivity = () => {
   })
 }
 
+// GET
 export const useBoards = () => {
   return useQuery({ ...getBoardOption })
 }
 
+// PATCH
 export const useUpdateBoard = (id: string) => {
   const qc = useQueryClient()
-  const { toggleIsEditing } = useEdit()
   return useMutation({
     mutationKey: ["board"],
-    mutationFn: (payload: UpdateBoardSchema) => updateBoard(payload, id),
-    onSuccess: () => {
-      toggleIsEditing()
-      toast.success("Board updated successfully")
-    },
+    mutationFn: (payload: TUpdateBoard) => updateBoard(payload, id),
+    onSuccess: () => toast.success("Board updated successfully"),
     onError: () => toast.error("Something went wrong while updating the board"),
     onSettled: () => {
       qc.invalidateQueries({ queryKey: ["board", id] })
@@ -84,6 +79,7 @@ export const useUpdateBoard = (id: string) => {
   })
 }
 
+// GET
 const boardsByIdOptions = (id: string) =>
   queryOptions({
     queryKey: ["board", id],
@@ -91,12 +87,14 @@ const boardsByIdOptions = (id: string) =>
     select: (data) => data[0],
   })
 
+// GET
 export const useBoardById = (id: string) => {
   return useQuery({
     ...boardsByIdOptions(id),
   })
 }
 
+// GET
 export const useGetAllColumnIds = (id: string) => {
   return useQuery({
     ...boardsByIdOptions(id),
