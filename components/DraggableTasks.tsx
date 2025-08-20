@@ -12,7 +12,7 @@ const DraggableTask = ({ taskInfo }: { taskInfo: TGetTask }) => {
           {taskInfo.description ?? "No descrption"}
         </p>
 
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between mt-4">
           <div className="flex items-center space-x-1 sm:space-x-2 min-w-0 text-xs text-gray-600">
             <Calendar className="w-4 h-4" />
             <span>{taskInfo.due_date.toString()}</span>

@@ -21,8 +21,7 @@ export const useCreateTask = (id: number | string) => {
       dismiss()
     },
     onError: () => toast.error("Something went wrong!!"),
-    onSettled: () =>
-      qc.invalidateQueries({ queryKey: ["board"], exact: false }),
+    onSettled: () => qc.invalidateQueries({ queryKey: ["task"], exact: false }),
   })
 }
 
