@@ -6,6 +6,10 @@ import { useShallow } from "zustand/shallow"
 type PersistStoreTypes = {
   viewMode: "grid" | "list"
   toggleViewMode: () => void
+  boardId: number
+  setBoardId: (id: number) => void
+  userId: string
+  setUserId: (id: string) => void
 }
 
 export const usePersistStore = create<PersistStoreTypes>()(
@@ -14,6 +18,10 @@ export const usePersistStore = create<PersistStoreTypes>()(
       viewMode: "list",
       toggleViewMode: () =>
         set((s) => ({ viewMode: s.viewMode === "list" ? "grid" : "list" })),
+      boardId: 0,
+      setBoardId: (id) => set({ boardId: id }),
+      userId: "",
+      setUserId: (id) => set({ userId: id }),
     }),
     {
       name: "zp-store",
@@ -24,4 +32,20 @@ export const usePersistStore = create<PersistStoreTypes>()(
 export const useViewToggles = () =>
   usePersistStore(
     useShallow(({ viewMode, toggleViewMode }) => ({ viewMode, toggleViewMode }))
+  )
+
+export const useBoardId = () =>
+  usePersistStore(
+    useShallow(({ boardId, setBoardId }) => ({
+      boardId,
+      setBoardId,
+    }))
+  )
+
+export const useUserId = () =>
+  usePersistStore(
+    useShallow(({ userId, setUserId }) => ({
+      userId,
+      setUserId,
+    }))
   )

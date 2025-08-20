@@ -26,20 +26,21 @@ import { Calendar } from "../ui/calendar"
 import { DialogClose, DialogFooter } from "../ui/dialog"
 import { TaskPriorities } from "@/lib/types"
 import { useCreateTask } from "@/lib/hooks"
+import { useBoardId, useUserId } from "@/store/persist.store"
 
 type TCreateTaskForm = {
-  user_id: string
   c_id: number
-  b_id: number
 }
 
-const CreateTaskForm: React.FC<TCreateTaskForm> = ({ user_id, c_id, b_id }) => {
-  const { mutate, isPending } = useCreateTask(b_id)
+const CreateTaskForm: React.FC<TCreateTaskForm> = ({ c_id }) => {
+  const { userId } = useUserId()
+  const { boardId } = useBoardId()
+  const { mutate, isPending } = useCreateTask(boardId)
 
   const form = useForm<TCreateTask>({
     resolver: zodResolver(createTaskSchema),
     defaultValues: {
-      assignee: user_id,
+      assignee: userId,
       column_id: c_id,
       title: "",
       sort_order: 0,

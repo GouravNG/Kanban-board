@@ -1,106 +1,51 @@
 "use client"
 
-import Column from "@/components/Columns"
-import CreateTaskForm from "@/components/Forms/CreateTask.form"
-import UpdateBoardForm from "@/components/Forms/UpdateBoard.form"
-import { Button } from "@/components/ui/button"
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog"
-import {
-  useBoardById,
-  useGetAllColumnIds,
-  useTasksByColumnId,
-} from "@/lib/hooks"
-
-import { ArrowLeft, Filter, PlusIcon, Trash2 } from "lucide-react"
-import Link from "next/link"
+import BoardPageUtils from "@/components/BoardPageUtils"
+import CreateColumns from "@/components/CreateColumns"
+import CreateTask from "@/components/CreateTask"
+import Draggable from "@/components/Draggable"
+import { useBoardById } from "@/lib/hooks"
+import { useBoardId } from "@/store/persist.store"
 import { use } from "react"
 
 const BoardPage = ({ params }: { params: Promise<{ b_id: string }> }) => {
   const { b_id } = use(params)
+  const { setBoardId } = useBoardId()
   const { data, isLoading, error } = useBoardById(b_id)
-  const { data: cls } = useGetAllColumnIds(b_id)
-
-  const res = useTasksByColumnId(cls ?? [])
+  setBoardId(Number(b_id))
 
   if (isLoading) return <h1>Loading...</h1>
+
   if (error) return <h1>Something went wrong!!</h1>
+
   if (data && data !== undefined) {
-    const c_id = data.columns[0].id
     return (
       <div className="min-h-screen">
-        {/* Names */}
-        <div className="flex items-center justify-between p-2 ">
-          <div className="flex items-center">
-            <span className="bg-gray-200 p-1 rounded-full hover:bg-gray-400 transition-colors">
-              <Link href={"/dashboard"}>
-                <ArrowLeft className="text-gray-600 hover:text-gray-200  transition-colors" />
-              </Link>
-            </span>
-            <h2 className="pl-2 ">{data.title}</h2>
-            <div className={`${data.color} w-4 h-4 rounded-full ml-4`} />
-          </div>
+        {/* Utilities */}
+        <BoardPageUtils b_id={b_id} data={data} />
 
-          {/* buttons */}
-          <div className="space-x-2">
-            <Button size={"sm"} variant={"outline"}>
-              <Filter />
-            </Button>
-
-            {/* Edit the board */}
-            <UpdateBoardForm
-              id={b_id}
-              defaultValues={{
-                color: data.color,
-                description: data.description,
-                title: data.title,
-              }}
-            />
-
-            <Button size={"sm"} variant={"destructive"}>
-              <Trash2 />
-            </Button>
-          </div>
-        </div>
         {/* layout */}
-        <main className="border border-black container mx-auto px-2 sm:px-4 py-4 sm:py-6">
-          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6 space-y-4">
-            <div className="flex flex-wrap items-center gap-4 sm:gap-6">
-              <div className="text-sm text-gray-600">
-                <span className="font-medium">Total Task: {1}</span>
+        <main className="container mx-auto px-2 sm:px-4 py-4 sm:py-6">
+          {data.columns.length ? (
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6 space-y-4">
+              <div className="flex flex-wrap items-center gap-4 sm:gap-6">
+                <div className="text-sm text-gray-600">
+                  <span className="font-medium">
+                    Total Task: {data.columns.length}
+                  </span>
+                </div>
+              </div>
+
+              <CreateTask c_id={data.columns[0].id} />
+
+              {/* task columsn */}
+              <div className="flex flex-col lg:flex-row lg:space-x-6 lg:overflow-x-auto lg:pb-6 lg:px-2 lg:mx-2 space-y-4 lg:space-y-0">
+                <Draggable />
               </div>
             </div>
-
-            <Dialog>
-              <DialogTrigger asChild>
-                <Button>
-                  <PlusIcon /> Add Task
-                </Button>
-              </DialogTrigger>
-
-              <DialogContent>
-                <DialogHeader>
-                  <DialogTitle>Add Task</DialogTitle>
-                </DialogHeader>
-
-                <CreateTaskForm
-                  c_id={c_id}
-                  user_id={data.user_id}
-                  b_id={Number(b_id)}
-                />
-              </DialogContent>
-            </Dialog>
-          </div>
-
-          {/* task columsn */}
-          <div className="flex flex-col lg:flex-row lg:space-x-6 lg:overflow-x-auto lg:pb-6 lg:px-2 lg:mx-2 space-y-4 lg:space-y-0">
-            {<Column data={res} />}
-          </div>
+          ) : (
+            <CreateColumns />
+          )}
         </main>
       </div>
     )

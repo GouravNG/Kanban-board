@@ -3,12 +3,15 @@
 import BoardsView from "@/components/BoardsView"
 import DashBoardUtils from "@/components/DashBoardUtils"
 import DashBoardWidgets from "@/components/DashBoardWidgets"
+import { useUserId } from "@/store/persist.store"
 import { useUser } from "@clerk/nextjs"
 
 const Dashboard = () => {
   const { user, isLoaded, isSignedIn } = useUser()
+  const { setUserId } = useUserId()
   if (!isLoaded || user === undefined) return <h1>Loading..</h1>
-  if (isLoaded && user !== undefined && isSignedIn)
+  if (isLoaded && user !== undefined && isSignedIn) {
+    setUserId(user.id)
     return (
       <main className="container mx-auto p-4 sm:py-6">
         <div className="mb-6 sm:mb-8">
@@ -34,5 +37,6 @@ const Dashboard = () => {
         </div>
       </main>
     )
+  }
 }
 export default Dashboard
