@@ -7,9 +7,9 @@ import {
   CardTitle,
 } from "./ui/card"
 import { Badge } from "./ui/badge"
-import { TBoards } from "@/lib/types"
+import { TGetBoard } from "@/lib/types"
 
-export const BoardsCard = ({ board }: { board: TBoards }) => {
+export const BoardsCard = ({ board }: { board: TGetBoard }) => {
   return (
     <Link href={`/boards/${board.id}`} prefetch={false}>
       <Card className="hover:shadow-lg transition-shadow cursor-pointer group">

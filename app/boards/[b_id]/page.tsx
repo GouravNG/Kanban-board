@@ -58,4 +58,3 @@ const BoardPage = ({ params }: { params: Promise<{ b_id: string }> }) => {
   }
 }
 export default BoardPage
-1
