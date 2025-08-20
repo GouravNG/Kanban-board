@@ -10,7 +10,7 @@ import { toast } from "sonner"
 import useDismissDialog from "./useDismissDialog"
 
 // POST
-export const useCreateTask = (id: number) => {
+export const useCreateTask = (id: number | string) => {
   const qc = useQueryClient()
   const { dismiss } = useDismissDialog()
   return useMutation({
@@ -21,7 +21,8 @@ export const useCreateTask = (id: number) => {
       dismiss()
     },
     onError: () => toast.error("Something went wrong!!"),
-    onSettled: () => qc.invalidateQueries({ queryKey: ["task", id] }),
+    onSettled: () =>
+      qc.invalidateQueries({ queryKey: ["board"], exact: false }),
   })
 }
 
@@ -30,6 +31,7 @@ export const taskOptions = (id: number) =>
   queryOptions({
     queryKey: ["task", id],
     queryFn: () => getTasksByColumnId(id),
+    select: (d) => d[0],
   })
 
 // GET

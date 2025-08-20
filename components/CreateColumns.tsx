@@ -9,29 +9,47 @@ import {
 } from "./ui/dialog"
 import CreateColumn from "./Forms/Column-Create.form"
 
-const CreateColumns = () => {
+const DialogCreateColumn = ({
+  variant = "type1",
+}: {
+  variant: "type1" | "type2"
+}) => {
   return (
+    <Dialog>
+      <DialogTrigger asChild>
+        <Button
+          variant={variant === "type1" ? "outline" : "ghost"}
+          className="cursor-pointer"
+        >
+          <CirclePlusIcon /> Create Column
+        </Button>
+      </DialogTrigger>
+
+      <DialogContent>
+        <DialogTitle>
+          <DialogHeader>Add new column</DialogHeader>
+        </DialogTitle>
+
+        <CreateColumn />
+      </DialogContent>
+    </Dialog>
+  )
+}
+
+const CreateColumns = ({
+  variant = "type1",
+}: {
+  variant: "type1" | "type2"
+}) => {
+  return variant === "type1" ? (
     <div className="flex">
       <div className="mx-auto p-2 flex flex-col items-center justify-center gap-2 ">
         <p className="text-sm text-gray-600">Start by creating the columns.</p>
-
-        <Dialog>
-          <DialogTrigger asChild>
-            <Button variant={"outline"} className="cursor-pointer">
-              <CirclePlusIcon /> Create Column
-            </Button>
-          </DialogTrigger>
-
-          <DialogContent>
-            <DialogTitle>
-              <DialogHeader>Add new column</DialogHeader>
-            </DialogTitle>
-
-            <CreateColumn />
-          </DialogContent>
-        </Dialog>
+        <DialogCreateColumn variant={variant} />
       </div>
     </div>
+  ) : (
+    <DialogCreateColumn variant={variant} />
   )
 }
 export default CreateColumns
