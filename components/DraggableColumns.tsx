@@ -1,8 +1,7 @@
 import { TResponseTask } from "@/lib/types"
 import React from "react"
 import { Badge } from "./ui/badge"
-import { Button } from "./ui/button"
-import { Edit } from "lucide-react"
+import ColumnEditUi from "./ColumnEditUI"
 
 const DraggableColumns = ({
   children,
@@ -24,9 +23,7 @@ const DraggableColumns = ({
             </Badge>
           </div>
           <div>
-            <Button variant={"ghost"} size={"sm"} className="flex-shrink-0">
-              <Edit />
-            </Button>
+            <ColumnEditUi title={data.title} />
           </div>
         </div>
         {children}
