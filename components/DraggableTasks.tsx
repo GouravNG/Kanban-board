@@ -3,6 +3,7 @@ import { Card, CardContent } from "./ui/card"
 import { Calendar } from "lucide-react"
 import { getPriorityColors } from "@/lib/colors"
 import { useDraggable } from "@dnd-kit/react"
+import TaskEdit from "./Task-EditUI"
 
 const DraggableTask = ({ taskInfo }: { taskInfo: TGetTask }) => {
   const { ref } = useDraggable({
@@ -11,10 +12,15 @@ const DraggableTask = ({ taskInfo }: { taskInfo: TGetTask }) => {
   return (
     <Card ref={ref}>
       <CardContent>
-        <h4>{taskInfo.title}</h4>
-        <p className="text-xs text-gray-600">
-          {taskInfo.description ?? "No descrption"}
-        </p>
+        <div className="flex items-center justify-between">
+          <div>
+            <h4>{taskInfo.title}</h4>
+            <p className="text-xs text-gray-600">
+              {taskInfo.description ?? "No descrption"}
+            </p>
+          </div>
+          <TaskEdit data={taskInfo} />
+        </div>
 
         <div className="flex items-center justify-between mt-4">
           <div className="flex items-center space-x-1 sm:space-x-2 min-w-0 text-xs text-gray-600">

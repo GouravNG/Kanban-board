@@ -3,8 +3,8 @@ import { TGetTask } from "../schema"
 // From Schema
 export type {
   TCreateTask,
-  TUpdateColumn,
-  TGetColumn,
+  TUpdateTask,
+  TGetTask,
   TReorderTask,
 } from "@/lib/schema"
 

@@ -8,7 +8,7 @@ import DroppableColumnAreas from "./DroppableColumnArea"
 import DraggableColumns from "./DraggableColumns"
 import DroppableTaskArea from "./DroppableTaskArea"
 import DraggableTask from "./DraggableTasks"
-import { DragDropProvider } from "@dnd-kit/react"
+import { DragDropProvider, PointerSensor } from "@dnd-kit/react"
 
 import { useState } from "react"
 
@@ -20,6 +20,19 @@ const Draggable = () => {
   const { data: columsIdArray } = useGetAllColumnIds(String(boardId))
   const data = useTasksByColumnId(columsIdArray!)
   const { mutate } = useUpdateTaskOnDND(taskId)
+  const sensor = PointerSensor.configure({
+    activationConstraints: {
+      distance: {
+        value: {
+          x: 15,
+        },
+      },
+      delay: {
+        value: 250,
+        tolerance: 5,
+      },
+    },
+  })
 
   // on drag start
   const handleDragStart = (t_id: string) => {
@@ -44,6 +57,7 @@ const Draggable = () => {
 
         handleDragEnd(e.operation.target?.id as number)
       }}
+      sensors={[sensor]}
     >
       {data.map((columns, idx) => {
         return (
