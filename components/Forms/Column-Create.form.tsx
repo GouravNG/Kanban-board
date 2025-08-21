@@ -14,20 +14,21 @@ import { Input } from "../ui/input"
 import { DialogFooter } from "../ui/dialog"
 import { Button } from "../ui/button"
 import { Loader2Icon, PlusCircle } from "lucide-react"
-import { useCreateColumns } from "@/lib/hooks"
+import { useColumnSortNumber, useCreateColumns } from "@/lib/hooks"
 import { useBoardId, useUserId } from "@/store/persist.store"
 
 const CreateColumn = () => {
   const { isPending, mutate } = useCreateColumns()
   const { boardId } = useBoardId()
   const { userId } = useUserId()
+  const { data: c_sort_number } = useColumnSortNumber(String(boardId))
 
   const form = useForm<TCreateColumn>({
     resolver: zodResolver(createColumnsSchema),
     defaultValues: {
       board_id: boardId,
       user_id: userId,
-      sort_order: 0,
+      sort_order: c_sort_number,
       title: "",
     },
   })

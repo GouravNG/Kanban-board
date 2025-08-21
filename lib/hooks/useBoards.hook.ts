@@ -103,3 +103,11 @@ export const useGetAllColumnIds = (id: string) => {
     select: (d) => d.map((i) => i.columns.map(({ id }) => id))[0],
   })
 }
+
+//GET COL COUNT
+export const useColumnSortNumber = (b_id: string) => {
+  return useQuery({
+    ...boardsByIdOptions(b_id),
+    select: (d) => d[0].columns.length,
+  })
+}

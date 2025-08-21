@@ -25,7 +25,7 @@ import { Calendar1, Loader2, PlusCircle } from "lucide-react"
 import { Calendar } from "../ui/calendar"
 import { DialogClose, DialogFooter } from "../ui/dialog"
 import { TaskPriorities } from "@/lib/types"
-import { useCreateTask } from "@/lib/hooks"
+import { useCreateTask, useTaskSortNumber } from "@/lib/hooks"
 import { useBoardId, useUserId } from "@/store/persist.store"
 
 type TCreateTaskForm = {
@@ -36,6 +36,7 @@ const CreateTaskForm: React.FC<TCreateTaskForm> = ({ c_id }) => {
   const { userId } = useUserId()
   const { boardId } = useBoardId()
   const { mutate, isPending } = useCreateTask(boardId)
+  const { data: task_sort_no } = useTaskSortNumber(c_id)
 
   const form = useForm<TCreateTask>({
     resolver: zodResolver(createTaskSchema),
@@ -43,7 +44,7 @@ const CreateTaskForm: React.FC<TCreateTaskForm> = ({ c_id }) => {
       assignee: userId,
       column_id: c_id,
       title: "",
-      sort_order: 0,
+      sort_order: task_sort_no,
     },
   })
 

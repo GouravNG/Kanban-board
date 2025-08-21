@@ -2,6 +2,7 @@ import {
   queryOptions,
   useMutation,
   useQueries,
+  useQuery,
   useQueryClient,
 } from "@tanstack/react-query"
 import { createTaskByBoardId, getTasksByColumnId } from "../functions/tasks.fn"
@@ -40,4 +41,9 @@ export const useTasksByColumnId = (data: number[]) => {
       ...taskOptions(id),
     })),
   })
+}
+
+// GET TASK COUNT
+export const useTaskSortNumber = (c_id: number) => {
+  return useQuery({ ...taskOptions(c_id), select: (d) => d[0].tasks.length })
 }
