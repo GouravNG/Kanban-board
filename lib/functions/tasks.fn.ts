@@ -20,5 +20,5 @@ export const getTasksByColumnId = async (id: number) => {
 // PATCH
 export const updateTaskDND = async (id: string, payload: TUpdateTaskDND) => {
   const res = await queryClient.patch(tasksURL.url_updateTask(id), payload)
-  return res.data()
+  return res.data
 }

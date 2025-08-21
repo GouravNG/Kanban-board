@@ -2,10 +2,14 @@ import { TGetTask } from "@/lib/schema"
 import { Card, CardContent } from "./ui/card"
 import { Calendar } from "lucide-react"
 import { getPriorityColors } from "@/lib/colors"
+import { useDraggable } from "@dnd-kit/react"
 
 const DraggableTask = ({ taskInfo }: { taskInfo: TGetTask }) => {
+  const { ref } = useDraggable({
+    id: taskInfo.id,
+  })
   return (
-    <Card>
+    <Card ref={ref}>
       <CardContent>
         <h4>{taskInfo.title}</h4>
         <p className="text-xs text-gray-600">

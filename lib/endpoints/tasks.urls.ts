@@ -10,7 +10,7 @@ export const tasksURL = {
 
   url_updateTask: function (id: string) {
     const url = this.TASKS_ENDPOINT()
-    url.searchParams.set("id", id)
+    url.searchParams.set("id", `eq.${id}`)
     return url.toString()
   },
 }
