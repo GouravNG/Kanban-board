@@ -1,7 +1,7 @@
 import { columnsURL, tasksURL } from "../endpoints"
 import queryClient from "../queryclient/axios.config"
 import { TCreateTask } from "../schema"
-import { TResponseTask } from "../types"
+import { TResponseTask, TUpdateTaskDND } from "../types"
 
 // POST
 export const createTaskByBoardId = async (payload: TCreateTask) => {
@@ -15,4 +15,10 @@ export const getTasksByColumnId = async (id: number) => {
     columnsURL.url_getTasksByColumnId(id)
   )
   return res.data
+}
+
+// PATCH
+export const updateTaskDND = async (id: string, payload: TUpdateTaskDND) => {
+  const res = await queryClient.patch(tasksURL.url_updateTask(id), payload)
+  return res.data()
 }

@@ -7,4 +7,10 @@ export const tasksURL = {
     url.searchParams.set("select", "*")
     return url.toString()
   },
+
+  url_updateTask: function (id: string) {
+    const url = this.TASKS_ENDPOINT()
+    url.searchParams.set("id", id)
+    return url.toString()
+  },
 }

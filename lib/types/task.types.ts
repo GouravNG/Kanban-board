@@ -20,3 +20,7 @@ export type TResponseTask = {
   user_id: string
   tasks: TGetTask[]
 }
+
+export type TUpdateTaskDND = {
+  column_id: number
+}

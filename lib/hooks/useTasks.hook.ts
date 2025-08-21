@@ -5,10 +5,15 @@ import {
   useQuery,
   useQueryClient,
 } from "@tanstack/react-query"
-import { createTaskByBoardId, getTasksByColumnId } from "../functions/tasks.fn"
+import {
+  createTaskByBoardId,
+  getTasksByColumnId,
+  updateTaskDND,
+} from "../functions/tasks.fn"
 import { TCreateTask } from "../schema"
 import { toast } from "sonner"
 import useDismissDialog from "./useDismissDialog"
+import { TUpdateTaskDND } from "../types"
 
 // POST
 export const useCreateTask = (id: number | string) => {
@@ -46,4 +51,16 @@ export const useTasksByColumnId = (data: number[]) => {
 // GET TASK COUNT
 export const useTaskSortNumber = (c_id: number) => {
   return useQuery({ ...taskOptions(c_id), select: (d) => d[0].tasks.length })
+}
+
+// PATCH
+export const useUpdateTaskOnDND = (t_id: string) => {
+  const qc = useQueryClient()
+  return useMutation({
+    mutationKey: ["task"],
+    mutationFn: (payload: TUpdateTaskDND) => updateTaskDND(t_id, payload),
+    onSuccess: () => toast.success("Task moved successfully"),
+    onError: () => toast.error("Something went wrong while moving the task!!"),
+    onSettled: () => qc.invalidateQueries({ queryKey: ["task"], exact: false }),
+  })
 }
