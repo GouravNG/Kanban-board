@@ -1,3 +1,4 @@
+"use client"
 import { useViewToggles } from "@/store/persist.store"
 import { Button } from "./ui/button"
 import { FilterIcon, Grid3X3, List, SearchIcon } from "lucide-react"
@@ -40,7 +41,7 @@ const ViewModes = () => {
   )
 }
 
-const DashBoardUtils = ({ userId }: { userId: string }) => {
+const DashBoardUtils = () => {
   return (
     <>
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4 sm:mb-6 space-y-4 sm:space-y-0">
@@ -57,7 +58,7 @@ const DashBoardUtils = ({ userId }: { userId: string }) => {
           <Button variant={"outline"} size={"sm"}>
             <FilterIcon /> Filter
           </Button>
-          <CreateBoardForm user_id={userId} />
+          <CreateBoardForm />
         </div>
       </div>
 

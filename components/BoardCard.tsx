@@ -29,15 +29,15 @@ export const BoardsCard = ({ board }: { board: TGetBoard }) => {
             {board.title}
           </CardTitle>
 
-          <CardDescription className="text-sm mb-4">
-            {board?.description}
+          <CardDescription className="text-sm mb-4 truncate">
+            {board.description || "No Description"}
           </CardDescription>
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between text-xs space-y-1 text-gray-500 sm:space-y-0">
             <span>
-              created: {new Date(board.created_at).toLocaleDateString()}
+              Created: {new Date(board.created_at).toLocaleDateString()}
             </span>
             <span>
-              updated: {new Date(board.updated_at).toLocaleDateString()}
+              Updated: {new Date(board.updated_at).toLocaleDateString()}
             </span>
           </div>
         </CardContent>

@@ -3,6 +3,7 @@ import {
   useMutation,
   useQuery,
   useQueryClient,
+  useSuspenseQuery,
 } from "@tanstack/react-query"
 
 import {
@@ -33,7 +34,7 @@ export const useCreateBoard = () => {
 }
 
 // GET
-const getBoardOption = queryOptions({
+export const getBoardOption = queryOptions({
   queryKey: ["board"],
   queryFn: getBoards,
 })
@@ -61,7 +62,7 @@ export const useBoardsActivity = () => {
 
 // GET
 export const useBoards = () => {
-  return useQuery({ ...getBoardOption })
+  return useSuspenseQuery({ ...getBoardOption })
 }
 
 // PATCH
