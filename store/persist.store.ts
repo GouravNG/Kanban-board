@@ -10,6 +10,8 @@ type PersistStoreTypes = {
   setBoardId: (id: number) => void
   userId: string
   setUserId: (id: string) => void
+  userName: string
+  setUserName: (userName: string) => void
 }
 
 export const usePersistStore = create<PersistStoreTypes>()(
@@ -22,6 +24,8 @@ export const usePersistStore = create<PersistStoreTypes>()(
       setBoardId: (id) => set({ boardId: id }),
       userId: "",
       setUserId: (id) => set({ userId: id }),
+      userName: "",
+      setUserName: (userName) => set({ userName }),
     }),
     {
       name: "zp-store",
@@ -47,5 +51,13 @@ export const useUserId = () =>
     useShallow(({ userId, setUserId }) => ({
       userId,
       setUserId,
+    }))
+  )
+
+export const useUserName = () =>
+  usePersistStore(
+    useShallow(({ userName, setUserName }) => ({
+      userName,
+      setUserName,
     }))
   )
