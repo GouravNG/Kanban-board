@@ -20,7 +20,7 @@ import {
 } from "../ui/select"
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover"
 import { Button } from "../ui/button"
-import { Calendar1, Loader2, PlusCircle, Trash2Icon } from "lucide-react"
+import { Calendar1, Edit, Loader2, Trash2Icon } from "lucide-react"
 import { DialogClose, DialogFooter } from "../ui/dialog"
 import { Calendar } from "../ui/calendar"
 import { TaskPriorities } from "@/lib/types"
@@ -170,6 +170,7 @@ const UpdateTaskForm: React.FC<TUpdateTask> = ({
           {/* Delete */}
           <Button variant={"destructive"}>
             <Trash2Icon />
+            <p className="sm:hidden">Delete</p>
           </Button>
 
           <DialogClose asChild>
@@ -182,8 +183,8 @@ const UpdateTaskForm: React.FC<TUpdateTask> = ({
               <Loader2 className="animate-spin" />
             ) : (
               <>
-                <PlusCircle className="mr-1" />
-                Create
+                <Edit className="mr-1" />
+                Update
               </>
             )}
           </Button>

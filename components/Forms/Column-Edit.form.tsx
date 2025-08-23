@@ -12,7 +12,7 @@ import {
 import { Input } from "../ui/input"
 import { DialogClose, DialogFooter } from "../ui/dialog"
 import { Button } from "../ui/button"
-import { Loader2Icon, PlusCircle, TrashIcon } from "lucide-react"
+import { EditIcon, Loader2Icon, TrashIcon } from "lucide-react"
 
 const ColumnEditForm = ({ title }: { title: string }) => {
   const form = useForm<TUpdateColumn>({
@@ -51,6 +51,7 @@ const ColumnEditForm = ({ title }: { title: string }) => {
           {/* Delete */}
           <Button variant={"destructive"}>
             <TrashIcon />
+            <p className="sm:hidden">Delete</p>
           </Button>
           <DialogClose asChild>
             <Button variant={"outline"}>Close</Button>
@@ -60,7 +61,7 @@ const ColumnEditForm = ({ title }: { title: string }) => {
               <Loader2Icon className="animate-spin" />
             ) : (
               <>
-                <PlusCircle /> Create
+                <EditIcon /> Update
               </>
             )}
           </Button>

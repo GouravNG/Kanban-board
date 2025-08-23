@@ -21,7 +21,7 @@ import {
 import { useForm } from "react-hook-form"
 import { useUpdateBoard } from "@/lib/hooks"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { Edit, LoaderCircleIcon, PlusCircleIcon } from "lucide-react"
+import { Edit, EditIcon, LoaderCircleIcon } from "lucide-react"
 import { Input } from "../ui/input"
 import { RadioGroup, RadioGroupItem } from "../ui/radio-group"
 import { colors } from "@/lib/colors"
@@ -150,7 +150,7 @@ const UpdateBoardForm = ({
               <Button type="submit">
                 {!isPending ? (
                   <>
-                    <PlusCircleIcon />
+                    <EditIcon />
                     Update
                   </>
                 ) : (
