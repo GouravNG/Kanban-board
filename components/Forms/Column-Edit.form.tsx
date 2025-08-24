@@ -12,9 +12,11 @@ import {
 import { Input } from "../ui/input"
 import { DialogClose, DialogFooter } from "../ui/dialog"
 import { Button } from "../ui/button"
-import { Loader2Icon, PlusCircle, TrashIcon } from "lucide-react"
+import { EditIcon, Loader2Icon, TrashIcon } from "lucide-react"
+import { useEditColumn } from "@/lib/hooks"
 
-const ColumnEditForm = ({ title }: { title: string }) => {
+const ColumnEditForm = ({ title, c_id }: { title: string; c_id: number }) => {
+  const { mutate, isPending } = useEditColumn(c_id)
   const form = useForm<TUpdateColumn>({
     resolver: zodResolver(updateColumnsSchema),
     defaultValues: {
@@ -23,7 +25,8 @@ const ColumnEditForm = ({ title }: { title: string }) => {
   })
 
   const onSubmit = (data: TUpdateColumn) => {
-    console.log(data)
+    mutate(data)
+    form.reset()
   }
 
   return (
@@ -51,16 +54,17 @@ const ColumnEditForm = ({ title }: { title: string }) => {
           {/* Delete */}
           <Button variant={"destructive"}>
             <TrashIcon />
+            <p className="sm:hidden">Delete</p>
           </Button>
           <DialogClose asChild>
             <Button variant={"outline"}>Close</Button>
           </DialogClose>
           <Button type="submit">
-            {false ? (
+            {isPending ? (
               <Loader2Icon className="animate-spin" />
             ) : (
               <>
-                <PlusCircle /> Create
+                <EditIcon /> Update
               </>
             )}
           </Button>

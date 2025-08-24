@@ -13,4 +13,10 @@ export const tasksURL = {
     url.searchParams.set("id", `eq.${id}`)
     return url.toString()
   },
+
+  url_deleteTask: function (id: string) {
+    const url = this.TASKS_ENDPOINT()
+    url.searchParams.set("id", `eq.${id}`)
+    return url.toString()
+  },
 }

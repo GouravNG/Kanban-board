@@ -7,6 +7,7 @@ import {
 
 import {
   createBoard,
+  deleteBoard,
   getBoardById,
   getBoards,
   updateBoard,
@@ -109,5 +110,19 @@ export const useColumnSortNumber = (b_id: string) => {
   return useQuery({
     ...boardsByIdOptions(b_id),
     select: (d) => d[0].columns.length,
+  })
+}
+
+export const useDeleteBoard = (id: string) => {
+  const qc = useQueryClient()
+  return useMutation({
+    mutationKey: ["board"],
+    mutationFn: () => deleteBoard(id),
+    onSuccess: () => toast.success("Board Deleted successfully"),
+    onError: () => toast.error("Something went wrong while Deleting the board"),
+    onSettled: () => {
+      qc.invalidateQueries({ queryKey: ["board", id] })
+      qc.invalidateQueries({ queryKey: ["board"] })
+    },
   })
 }

@@ -4,6 +4,8 @@ import "./globals.css"
 import Header from "@/components/Header"
 import Providers from "@/components/Providers"
 import { Toaster } from "@/components/ui/sonner"
+import { Analytics } from "@vercel/analytics/next"
+import { SpeedInsights } from "@vercel/speed-insights/next"
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -34,6 +36,8 @@ export default function RootLayout({
           <Toaster position={"top-right"} richColors />
           <Header />
           {children}
+          <Analytics />
+          <SpeedInsights />
         </body>
       </Providers>
     </html>
