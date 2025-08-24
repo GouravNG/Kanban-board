@@ -1,4 +1,4 @@
-import { TUpdateTask, updateTaskSchema } from "@/lib/schema"
+import { TGetTask, TUpdateTask, updateTaskSchema } from "@/lib/schema"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import {
@@ -25,27 +25,28 @@ import { DialogClose, DialogFooter } from "../ui/dialog"
 import { Calendar } from "../ui/calendar"
 import { TaskPriorities } from "@/lib/types"
 import { getPriorityColors } from "@/lib/colors"
+import { useEditTask } from "@/lib/hooks"
 
-const UpdateTaskForm: React.FC<TUpdateTask> = ({
+const UpdateTaskForm: React.FC<TGetTask> = ({
   description,
   due_date,
   priority,
   title,
+  id,
 }) => {
+  const { mutate, isPending } = useEditTask(String(id))
   const form = useForm<TUpdateTask>({
     resolver: zodResolver(updateTaskSchema),
     defaultValues: {
-      description,
-      due_date: new Date(due_date!),
+      description: description ?? " ",
+      due_date: new Date(due_date),
       priority,
       title,
     },
   })
 
   const onSubmit = (data: TUpdateTask) => {
-    //   mutate(data)
-    //   form.reset()
-    console.log(data)
+    mutate(data)
   }
 
   return (
@@ -179,7 +180,7 @@ const UpdateTaskForm: React.FC<TUpdateTask> = ({
             </Button>
           </DialogClose>
           <Button type="submit">
-            {false ? (
+            {isPending ? (
               <Loader2 className="animate-spin" />
             ) : (
               <>
