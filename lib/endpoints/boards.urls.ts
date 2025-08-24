@@ -25,4 +25,10 @@ export const boardsURL = {
     url.searchParams.set("id", `eq.${id}`)
     return url.toString()
   },
+
+  url_deleteBoardByid: function (id: string) {
+    const url = this.BOARDS_ENDPOINT()
+    url.searchParams.set("id", `eq.${id}`)
+    return url.toString()
+  },
 }

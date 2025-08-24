@@ -33,3 +33,9 @@ export const getBoardById = async (id: string) => {
   )
   return res.data
 }
+
+//Delete Board
+export const deleteBoard = async (id: string) => {
+  const res = await queryClient.delete(boardsURL.url_deleteBoardByid(id))
+  return res.data
+}

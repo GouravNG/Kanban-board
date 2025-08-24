@@ -9,7 +9,7 @@ import { Button } from "./ui/button"
 import { Edit } from "lucide-react"
 import ColumnEditForm from "./Forms/Column-Edit.form"
 
-const ColumnEditUi = ({ title }: { title: string }) => {
+const ColumnEditUi = ({ title, c_id }: { title: string; c_id: number }) => {
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -20,7 +20,7 @@ const ColumnEditUi = ({ title }: { title: string }) => {
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Edit your task</DialogTitle>
-          <ColumnEditForm title={title} />
+          <ColumnEditForm title={title} c_id={c_id} />
         </DialogHeader>
       </DialogContent>
     </Dialog>

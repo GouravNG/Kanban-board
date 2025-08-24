@@ -23,7 +23,7 @@ const DraggableColumns = ({
             </Badge>
           </div>
           <div>
-            <ColumnEditUi title={data.title} />
+            <ColumnEditUi title={data.title} c_id={data.id} />
           </div>
         </div>
         {children}

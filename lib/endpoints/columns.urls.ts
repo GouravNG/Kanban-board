@@ -11,4 +11,14 @@ export const columnsURL = {
     url.searchParams.set("select", "*,tasks(*)")
     return url.toString()
   },
+  url_updateColumn: function (c_id: number) {
+    const url = this.COLUMNS_ENDPOINT()
+    url.searchParams.set("id", `eq.${c_id}`)
+    return url.toString()
+  },
+  url_deleteColumn: function (c_id: number) {
+    const url = this.COLUMNS_ENDPOINT()
+    url.searchParams.set("id", `eq.${c_id}`)
+    return url.toString()
+  },
 }
