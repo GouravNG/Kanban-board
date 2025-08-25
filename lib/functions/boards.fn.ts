@@ -21,8 +21,12 @@ export const updateBoard = async (requestBody: TUpdateBoard, id: string) => {
 }
 
 // GET
-export const getBoards = async () => {
-  const res = await queryClient.get<TGetBoard[]>(boardsURL.url_getAllBoards())
+export const getBoards = async (token: string = "") => {
+  const res = await queryClient.get<TGetBoard[]>(boardsURL.url_getAllBoards(), {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  })
   return res.data
 }
 

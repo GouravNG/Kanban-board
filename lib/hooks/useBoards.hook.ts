@@ -35,14 +35,15 @@ export const useCreateBoard = () => {
 }
 
 // GET
-export const getBoardOption = queryOptions({
-  queryKey: ["board"],
-  queryFn: getBoards,
-})
+export const getBoardOption = (token: string = "") =>
+  queryOptions({
+    queryKey: ["board"],
+    queryFn: () => getBoards(token),
+  })
 
 export const useBoardsCount = () => {
   return useQuery({
-    ...getBoardOption,
+    ...getBoardOption(),
     select: (data) => data.length,
   })
 }
@@ -52,7 +53,7 @@ export const useBoardsActivity = () => {
   const oneWeekAgo = new Date()
   oneWeekAgo.setDate(oneWeekAgo.getDate() - 7)
   return useQuery({
-    ...getBoardOption,
+    ...getBoardOption(),
     select: (data) =>
       data.filter((boards) => {
         const updateData = new Date(boards.updated_at)
@@ -63,7 +64,7 @@ export const useBoardsActivity = () => {
 
 // GET
 export const useBoards = () => {
-  return useSuspenseQuery({ ...getBoardOption })
+  return useSuspenseQuery({ ...getBoardOption() })
 }
 
 // PATCH

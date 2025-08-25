@@ -4,6 +4,7 @@ import DashBoardWidgets from "@/components/DashBoardWidgets"
 import SkeletonBoards from "@/components/skeletons/Boards.skeletons"
 import { getBoardOption } from "@/lib/hooks"
 import { getQueryClient } from "@/lib/queryclient/get-query-client"
+import getToken from "@/lib/server-fn/getToken"
 import { getUser } from "@/lib/server-fn/getUser"
 import { dehydrate, HydrationBoundary } from "@tanstack/react-query"
 import { Suspense } from "react"
@@ -11,7 +12,8 @@ import { Suspense } from "react"
 const Dashboard = async () => {
   const user = await getUser()
   const qc = getQueryClient()
-  void qc.prefetchQuery(getBoardOption)
+  const token = await getToken()
+  void qc.prefetchQuery(getBoardOption(token))
 
   if (user !== null)
     return (
