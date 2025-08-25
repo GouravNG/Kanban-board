@@ -27,6 +27,7 @@ const ViewModes = () => {
         variant={viewMode === "grid" ? "ghost" : "default"}
         onClick={toggleViewMode}
         size={"sm"}
+        className={viewMode === "grid" ? "cursor-pointer" : ""}
       >
         <Grid3X3 />
       </Button>
@@ -34,6 +35,7 @@ const ViewModes = () => {
         variant={viewMode === "grid" ? "default" : "ghost"}
         onClick={toggleViewMode}
         size={"sm"}
+        className={viewMode === "grid" ? "" : "cursor-pointer"}
       >
         <List />
       </Button>
@@ -55,7 +57,7 @@ const DashBoardUtils = () => {
         {/* Buttons */}
         <div className="flex flex-col sm:flex-row items-stretch sm:items-center space-y-2 sm:space-y-0 space-x-2">
           <ViewModes />
-          <Button variant={"outline"} size={"sm"}>
+          <Button variant={"outline"} size={"sm"} disabled={true}>
             <FilterIcon /> Filter
           </Button>
           <CreateBoardForm />

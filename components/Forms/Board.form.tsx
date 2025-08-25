@@ -49,7 +49,7 @@ const CreateBoardForm = () => {
     <Dialog>
       {/* Button to trigger the form */}
       <DialogTrigger asChild>
-        <Button size={"sm"}>
+        <Button size={"sm"} className="cursor-pointer">
           <PlusCircleIcon />
           Create Board
         </Button>
@@ -147,7 +147,7 @@ const CreateBoardForm = () => {
               </DialogClose>
 
               {/* Submitting the form */}
-              <Button type="submit">
+              <Button type="submit" disabled={isPending}>
                 {!isPending ? (
                   <>
                     <PlusCircleIcon />
