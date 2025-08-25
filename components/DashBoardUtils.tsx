@@ -1,3 +1,4 @@
+"use client"
 import { useViewToggles } from "@/store/persist.store"
 import { Button } from "./ui/button"
 import { FilterIcon, Grid3X3, List, SearchIcon } from "lucide-react"
@@ -26,6 +27,7 @@ const ViewModes = () => {
         variant={viewMode === "grid" ? "ghost" : "default"}
         onClick={toggleViewMode}
         size={"sm"}
+        className={viewMode === "grid" ? "cursor-pointer" : ""}
       >
         <Grid3X3 />
       </Button>
@@ -33,6 +35,7 @@ const ViewModes = () => {
         variant={viewMode === "grid" ? "default" : "ghost"}
         onClick={toggleViewMode}
         size={"sm"}
+        className={viewMode === "grid" ? "" : "cursor-pointer"}
       >
         <List />
       </Button>
@@ -40,7 +43,7 @@ const ViewModes = () => {
   )
 }
 
-const DashBoardUtils = ({ userId }: { userId: string }) => {
+const DashBoardUtils = () => {
   return (
     <>
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4 sm:mb-6 space-y-4 sm:space-y-0">
@@ -54,10 +57,10 @@ const DashBoardUtils = ({ userId }: { userId: string }) => {
         {/* Buttons */}
         <div className="flex flex-col sm:flex-row items-stretch sm:items-center space-y-2 sm:space-y-0 space-x-2">
           <ViewModes />
-          <Button variant={"outline"} size={"sm"}>
+          <Button variant={"outline"} size={"sm"} disabled={true}>
             <FilterIcon /> Filter
           </Button>
-          <CreateBoardForm user_id={userId} />
+          <CreateBoardForm />
         </div>
       </div>
 

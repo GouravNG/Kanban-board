@@ -1,4 +1,3 @@
-"use client"
 import axios from "axios"
 import { getHeaders } from "../functions/utils"
 
@@ -8,11 +7,14 @@ const queryClient = axios.create({
 })
 
 queryClient.interceptors.request.use(async (config) => {
-  const token = window.Clerk.session
-    ? await window.Clerk.session.getToken()
-    : null
-  if (token) {
-    config.headers.Authorization = `Bearer ${token}`
+  if (typeof window !== "undefined") {
+    // For client
+    const token = window.Clerk.session
+      ? await window.Clerk.session.getToken()
+      : null
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`
+    }
   }
   return config
 })

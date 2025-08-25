@@ -8,7 +8,7 @@ const BoardsListView = () => {
       <div>
         {data.map((boards, index) => {
           return (
-            <div key={index + 1} className={index > 0 ? "mt-2" : "mt-0"}>
+            <div key={boards.id} className={index > 0 ? "mt-2" : "mt-0"}>
               <BoardsCard board={boards} />
             </div>
           )

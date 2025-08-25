@@ -1,3 +1,4 @@
+"use client"
 import { KanbanIcon, Rocket } from "lucide-react"
 import { Card, CardContent } from "./ui/card"
 import { useBoardsCount, useBoardsActivity } from "@/lib/hooks"
@@ -52,26 +53,22 @@ const DashBoardWidgets = () => {
 
   return (
     <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-6 sm:mb-8">
-      {boardsCount !== undefined && (
-        <CardWidget
-          isLoading={isBoardsCountLoading}
-          title="Total Boards"
-          value={boardsCount}
-          key={"board-count"}
-          color="bg-blue-100"
-          Icon={KanbanIcon}
-        />
-      )}
-      {recentActivity !== undefined && (
-        <CardWidget
-          isLoading={isRecentActivitiesLoading}
-          title="Recent Activities"
-          value={recentActivity}
-          key={"recent-activity"}
-          color="bg-green-100"
-          Icon={Rocket}
-        />
-      )}
+      <CardWidget
+        isLoading={isBoardsCountLoading}
+        title="Total Boards"
+        value={boardsCount ?? 0}
+        key={"board-count"}
+        color="bg-blue-100"
+        Icon={KanbanIcon}
+      />
+      <CardWidget
+        isLoading={isRecentActivitiesLoading}
+        title="Recent Activities"
+        value={recentActivity ?? 0}
+        key={"recent-activity"}
+        color="bg-green-100"
+        Icon={Rocket}
+      />
     </div>
   )
 }
