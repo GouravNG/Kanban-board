@@ -9,7 +9,7 @@ import { ArrowLeft, Filter, InfoIcon, Trash2 } from "lucide-react"
 const BoardPageUtils = ({ data }: { data: TBoardById }) => {
   const { boardId } = useBoardId()
   return (
-    <div className="flex items-center justify-between p-2 ">
+    <div className="flex items-center justify-between p-2 container mx-auto">
       <div className="flex items-center">
         <span className="bg-gray-200 p-1 rounded-full hover:bg-gray-400 transition-colors">
           <Link href={"/dashboard"}>
