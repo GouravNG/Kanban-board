@@ -24,9 +24,11 @@ import { Input } from "../ui/input"
 import { RadioGroup, RadioGroupItem } from "../ui/radio-group"
 import { colors } from "@/lib/colors"
 import { DialogTrigger } from "@radix-ui/react-dialog"
+import { useUserId } from "@/store/persist.store"
 
-const CreateBoardForm = ({ user_id }: { user_id: string }) => {
+const CreateBoardForm = () => {
   const { mutate, isPending } = useCreateBoard()
+  const { userId } = useUserId()
 
   const form = useForm<TCreateBoard>({
     resolver: zodResolver(createBoardSchema),
@@ -34,7 +36,7 @@ const CreateBoardForm = ({ user_id }: { user_id: string }) => {
       color: "bg-amber-500",
       description: "",
       title: "",
-      user_id: user_id ?? "",
+      user_id: userId,
     },
   })
 
@@ -47,7 +49,7 @@ const CreateBoardForm = ({ user_id }: { user_id: string }) => {
     <Dialog>
       {/* Button to trigger the form */}
       <DialogTrigger asChild>
-        <Button size={"sm"}>
+        <Button size={"sm"} className="cursor-pointer">
           <PlusCircleIcon />
           Create Board
         </Button>
@@ -145,7 +147,7 @@ const CreateBoardForm = ({ user_id }: { user_id: string }) => {
               </DialogClose>
 
               {/* Submitting the form */}
-              <Button type="submit">
+              <Button type="submit" disabled={isPending}>
                 {!isPending ? (
                   <>
                     <PlusCircleIcon />

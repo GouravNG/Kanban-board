@@ -147,7 +147,7 @@ const UpdateBoardForm = ({
               </DialogClose>
 
               {/* Submit of form */}
-              <Button type="submit">
+              <Button type="submit" disabled={isPending}>
                 {!isPending ? (
                   <>
                     <EditIcon />

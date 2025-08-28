@@ -4,6 +4,7 @@ import { SignInButton, SignUpButton, UserButton, useUser } from "@clerk/nextjs"
 import { Button } from "./ui/button"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
+import { useUserName } from "@/store/persist.store"
 
 const AuthUI = () => {
   return (
@@ -22,13 +23,12 @@ const AuthUI = () => {
 }
 
 const HomeUI = () => {
-  const { user } = useUser()
-
+  const { userName } = useUserName()
   return (
     <>
       <span className="text-xs sm:text-sm text-gray-600 hidden md:block">
         Hi,
-        {user?.username || user?.emailAddresses[0].emailAddress.split("@")[0]}
+        {userName}
       </span>
 
       <Link href={"/dashboard"}>
@@ -48,16 +48,12 @@ const HeaderContextUI = () => {
   const { isSignedIn } = useUser()
   const pathName = usePathname()
   const isHomePage = pathName === "/"
-  const isDashBoardPage = pathName === "/dashboard"
-  const isBoardsPage = /^\/boards\/.+/.test(pathName)
 
   return (
     <>
       {isSignedIn ? (
         <div className="flex flex-col sm:flex-row space-y-2 items-baseline space-x-2">
-          {isHomePage && <HomeUI />}
-          {isDashBoardPage && <DashboardUI />}
-          {isBoardsPage && <DashboardUI />}
+          {isHomePage ? <HomeUI /> : <DashboardUI />}
         </div>
       ) : (
         <AuthUI />

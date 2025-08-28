@@ -1,20 +1,28 @@
+"use client"
 import { useBoards } from "@/lib/hooks"
 import { useViewToggles } from "@/store/persist.store"
 import BoardsGridView from "@/components/Boards-gridview"
 import BoardsListView from "@/components/Boards-listview"
-import SkeletonBoards from "./skeletons/Boards.skeletons"
+import { SquareKanban } from "lucide-react"
 
 const BoardsView = () => {
-  const { data, isLoading, error } = useBoards()
+  const { data, error } = useBoards()
   const { viewMode } = useViewToggles()
 
-  if (isLoading) return <SkeletonBoards />
-  if (error) return <h1>Error fetching your boards..</h1>
+  if (error)
+    return (
+      <h1 className="text-center text-red-500 font-semibold">
+        Error fetching your boards.
+      </h1>
+    )
 
   return (
     <>
-      {data && data.length === 0 ? (
-        <p>No Boards yet...</p>
+      {data.length === 0 ? (
+        <div className="m-16 flex flex-col items-center justify-center">
+          <SquareKanban className="w-10 h-10 text-blue-600" />
+          <p className="font-semibold">No Boards found.</p>
+        </div>
       ) : viewMode !== "grid" ? (
         <BoardsGridView />
       ) : (

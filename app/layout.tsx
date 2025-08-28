@@ -18,8 +18,8 @@ const geistMono = Geist_Mono({
 })
 
 export const metadata: Metadata = {
-  title: "Trello Clone",
-  description: "Trello Clone with next.js",
+  title: "Knbn-board",
+  description: "Kanban-board",
 }
 
 export default function RootLayout({
@@ -29,17 +29,17 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <Providers>
-        <body
-          className={`${geistSans.variable} ${geistMono.className} antialiased min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 mx-1`}
-        >
+      <body
+        className={`${geistSans.variable} ${geistMono.className} antialiased min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 mx-1`}
+      >
+        <Providers>
           <Toaster position={"top-right"} richColors />
           <Header />
           {children}
           <Analytics />
           <SpeedInsights />
-        </body>
-      </Providers>
+        </Providers>
+      </body>
     </html>
   )
 }
