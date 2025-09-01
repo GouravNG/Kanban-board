@@ -3,8 +3,9 @@ export const boardsURL = {
     new URL("/rest/v1/boards", process.env.NEXT_PUBLIC_SUPABASE_URL),
 
   url_getAllBoards: function () {
-    const url = this.BOARDS_ENDPOINT().toString()
-    return url
+    const url = this.BOARDS_ENDPOINT()
+    url.searchParams.set("order", "updated_at.desc")
+    return url.toString()
   },
 
   url_createBoards: function () {
