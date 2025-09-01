@@ -1,3 +1,4 @@
+"use client"
 import {
   queryOptions,
   useMutation,
@@ -10,13 +11,14 @@ import {
   createBoard,
   deleteBoard,
   getBoardById,
-  getBoards,
   updateBoard,
 } from "../functions/boards.fn"
 
 import { toast } from "sonner"
 import { TUpdateBoard } from "../types"
 import useDismissDialog from "./useDismissDialog"
+import { useRouter } from "next/navigation"
+import { getBoardOption } from "./options"
 
 // POST
 export const useCreateBoard = () => {
@@ -33,13 +35,6 @@ export const useCreateBoard = () => {
     },
   })
 }
-
-// GET
-export const getBoardOption = (token: string = "") =>
-  queryOptions({
-    queryKey: ["board"],
-    queryFn: () => getBoards(token),
-  })
 
 export const useBoardsCount = () => {
   return useQuery({
@@ -114,13 +109,16 @@ export const useColumnSortNumber = (b_id: string) => {
     select: (d) => d[0].columns.length,
   })
 }
-
 export const useDeleteBoard = (id: string) => {
   const qc = useQueryClient()
+  const router = useRouter()
   return useMutation({
     mutationKey: ["board"],
     mutationFn: () => deleteBoard(id),
-    onSuccess: () => toast.success("Board Deleted successfully"),
+    onSuccess: () => {
+      toast.success("Board Deleted successfully")
+      router.replace("/dashboard")
+    },
     onError: () => toast.error("Something went wrong while Deleting the board"),
     onSettled: () => {
       qc.invalidateQueries({ queryKey: ["board", id] })

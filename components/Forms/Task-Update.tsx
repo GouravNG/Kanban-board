@@ -20,12 +20,13 @@ import {
 } from "../ui/select"
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover"
 import { Button } from "../ui/button"
-import { Calendar1, Edit, Loader2, Trash2Icon } from "lucide-react"
+import { Calendar1, Edit, Loader2 } from "lucide-react"
 import { DialogClose, DialogFooter } from "../ui/dialog"
 import { Calendar } from "../ui/calendar"
 import { TaskPriorities } from "@/lib/types"
 import { getPriorityColors } from "@/lib/colors"
-import { useEditTask } from "@/lib/hooks"
+import { useDeleteTask, useEditTask } from "@/lib/hooks"
+import DeleteDialogForm from "./Delete.form"
 
 const UpdateTaskForm: React.FC<TGetTask> = ({
   description,
@@ -35,6 +36,9 @@ const UpdateTaskForm: React.FC<TGetTask> = ({
   id,
 }) => {
   const { mutate, isPending } = useEditTask(String(id))
+  const { mutate: deleteTask, isPending: isTaskDeletePending } = useDeleteTask(
+    String(id)
+  )
   const form = useForm<TUpdateTask>({
     resolver: zodResolver(updateTaskSchema),
     defaultValues: {
@@ -169,10 +173,10 @@ const UpdateTaskForm: React.FC<TGetTask> = ({
         {/* Buttons */}
         <DialogFooter>
           {/* Delete */}
-          <Button variant={"destructive"}>
-            <Trash2Icon />
-            <p className="sm:hidden">Delete</p>
-          </Button>
+          <DeleteDialogForm
+            deleteFn={deleteTask}
+            isLoading={isTaskDeletePending}
+          />
 
           <DialogClose asChild>
             <Button type="button" variant={"outline"}>
