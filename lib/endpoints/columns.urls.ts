@@ -9,6 +9,7 @@ export const columnsURL = {
     const url = this.COLUMNS_ENDPOINT()
     url.searchParams.set("id", `eq.${c_id}`)
     url.searchParams.set("select", "*,tasks(*)")
+    url.searchParams.set("tasks.order", "priority.asc")
     return url.toString()
   },
   url_updateColumn: function (c_id: number) {

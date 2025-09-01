@@ -12,11 +12,14 @@ import {
 import { Input } from "../ui/input"
 import { DialogClose, DialogFooter } from "../ui/dialog"
 import { Button } from "../ui/button"
-import { EditIcon, Loader2Icon, TrashIcon } from "lucide-react"
-import { useEditColumn } from "@/lib/hooks"
+import { EditIcon, Loader2Icon } from "lucide-react"
+import { useDeleteColumn, useEditColumn } from "@/lib/hooks"
+import DeleteDialogForm from "./Delete.form"
 
 const ColumnEditForm = ({ title, c_id }: { title: string; c_id: number }) => {
   const { mutate, isPending } = useEditColumn(c_id)
+  const { mutate: deleteColumn, isPending: isColumnDeletePending } =
+    useDeleteColumn(c_id)
   const form = useForm<TUpdateColumn>({
     resolver: zodResolver(updateColumnsSchema),
     defaultValues: {
@@ -52,10 +55,10 @@ const ColumnEditForm = ({ title, c_id }: { title: string; c_id: number }) => {
 
         <DialogFooter>
           {/* Delete */}
-          <Button variant={"destructive"}>
-            <TrashIcon />
-            <p className="sm:hidden">Delete</p>
-          </Button>
+          <DeleteDialogForm
+            deleteFn={deleteColumn}
+            isLoading={isColumnDeletePending}
+          />
           <DialogClose asChild>
             <Button variant={"outline"}>Close</Button>
           </DialogClose>

@@ -4,10 +4,15 @@ import UpdateBoardForm from "./Forms/UpdateBoard.form"
 import { Button } from "./ui/button"
 import { useBoardId } from "@/store/persist.store"
 import { TBoardById } from "@/lib/types"
-import { ArrowLeft, Filter, InfoIcon, Trash2 } from "lucide-react"
+import { ArrowLeft, Filter, InfoIcon } from "lucide-react"
+import DeleteDialogForm from "./Forms/Delete.form"
+import { useDeleteBoard } from "@/lib/hooks"
 
 const BoardPageUtils = ({ data }: { data: TBoardById }) => {
   const { boardId } = useBoardId()
+  const { mutate: deleteBoard, isPending: isBoardDeleting } = useDeleteBoard(
+    String(boardId)
+  )
   return (
     <div className="flex items-center justify-between p-2 container mx-auto">
       <div className="flex items-center">
@@ -49,9 +54,7 @@ const BoardPageUtils = ({ data }: { data: TBoardById }) => {
           }}
         />
 
-        <Button size={"sm"} variant={"destructive"} disabled={true}>
-          <Trash2 />
-        </Button>
+        <DeleteDialogForm deleteFn={deleteBoard} isLoading={isBoardDeleting} />
       </div>
     </div>
   )
