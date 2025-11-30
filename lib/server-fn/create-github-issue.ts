@@ -9,9 +9,9 @@ export async function createGithubIssue({
   title: string
   description: string
 }) {
-  const GITHUB_TOKEN = process.env.GITHUB_TOKEN
-  const REPO_OWNER = process.env.GITHUB_REPO_OWNER
-  const REPO_NAME = process.env.GITHUB_REPO_NAME
+  const GITHUB_TOKEN = process.env.NEXT_PUBLIC_GITHUB_TOKEN
+  const REPO_OWNER = process.env.NEXT_PUBLIC_GITHUB_REPO_OWNER
+  const REPO_NAME = process.env.NEXT_PUBLIC_GITHUB_REPO_NAME
 
   if (!GITHUB_TOKEN || !REPO_OWNER || !REPO_NAME) {
     throw new Error(
