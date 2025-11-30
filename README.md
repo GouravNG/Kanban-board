@@ -2,6 +2,9 @@
 
 This project is a feature-rich, full-stack Trello clone built with modern web technologies. It provides a flexible and intuitive Kanban-style board for managing tasks and workflows, allowing users to create, organize, and track their work seamlessly. The application supports drag-and-drop functionality for both columns and tasks, real-time updates, and a modular architecture that makes it easy to extend and customize.
 
+![20251130-1624-25 6108393](https://github.com/user-attachments/assets/81f460e4-9f41-44ac-b89d-c23685474fd6)
+
+
 ## Key Features
 
 - **Authentication**: Secure user authentication is handled by Clerk, ensuring that all user data is protected and accessible only to authorized individuals.
