@@ -6,6 +6,7 @@ import Providers from "@/components/Providers"
 import { Toaster } from "@/components/ui/sonner"
 import { Analytics } from "@vercel/analytics/next"
 import { SpeedInsights } from "@vercel/speed-insights/next"
+import { BugReportHandler } from "@/components/BugReportHandler"
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -38,6 +39,7 @@ export default function RootLayout({
           {children}
           <Analytics />
           <SpeedInsights />
+          <BugReportHandler />
         </Providers>
       </body>
     </html>
