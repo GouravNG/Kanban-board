@@ -18,61 +18,25 @@ To get the project up and running on your local machine, follow these simple ste
 
 Make sure you have the following software installed on your system:
 
-- Node.js (v14 or higher)
-- npm (v6 or higher)
+- Node.js (v22 or higher)
+- pnpm (v6 or higher)
 
 ### Installation
 
 1. **Clone the repository**:
    ```sh
-   git clone https://github.com/your-username/trello-clone.git
+   git clone https://github.com/GouravNG/Kanban-board.git
    ```
 2. **Navigate to the project directory**:
    ```sh
-   cd trello-clone
+   cd  Kanban-board
    ```
 3. **Install the dependencies**:
    ```sh
-   npm install
+   pnpm install
    ```
 4. **Start the development server**:
    ```sh
-   npm run dev
+   pnpm run dev
    ```
 5. **Open your browser** and navigate to `http://localhost:3000` to see the application in action.
-
-## Project Structure
-
-The project is organized into the following directories:
-
-- **app/**: Contains the core application logic, including pages, layouts, and routing.
-  - **boards/**: Handles the display and management of individual boards.
-  - **dashboard/**: Manages the main user dashboard.
-- **components/**: Includes all reusable UI components, such as forms, buttons, and dialogs.
-  - **Forms/**: Contains all forms used for creating and updating boards, columns, and tasks.
-  - **skeletons/**: Provides loading skeletons for a smoother user experience.
-  - **ui/**: Houses the basic UI primitives, such as buttons, inputs, and cards.
-- **lib/**: Contains shared libraries, utility functions, and server-side logic.
-  - **endpoints/**: Defines the API endpoints for boards, columns, and tasks.
-  - **functions/**: Includes the core functions for interacting with the API.
-  - **hooks/**: Contains custom React hooks for managing state and side effects.
-  - **queryclient/**: Manages the React Query client for data fetching and caching.
-  - **schema/**: Defines the data schemas for boards, columns, and tasks.
-  - **server-fn/**: Includes server-side functions for authentication and data management.
-  - **types/**: Contains all custom type definitions for the project.
-- **store/**: Manages the application's global state.
-
-## Technologies Used
-
-- **Next.js**: A powerful React framework for building server-side rendered and statically generated web applications.
-- **TypeScript**: A statically typed superset of JavaScript that enhances code quality and maintainability.
-- **Tailwind CSS**: A utility-first CSS framework for creating custom designs with ease.
-- **Clerk**: A complete user management solution for handling authentication and user identity.
-- **Radix UI**: A collection of accessible and unstyled UI primitives for building high-quality design systems.
-- **Lucide React**: A library of beautiful and consistent icons for React applications.
-- **Sonner**: A toast notification library for creating elegant and unobtrusive notifications.
-- **React Query**: A powerful data-fetching library for managing server state in React applications.
-- **Axios**: A promise-based HTTP client for making requests to the server.
-- **Drizzle**: A TypeScript ORM for building and managing database schemas.
-- **Neon**: A serverless PostgreSQL database for modern web applications.
-- **Zod**: A TypeScript-first schema declaration and validation library.
