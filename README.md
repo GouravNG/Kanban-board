@@ -1,4 +1,4 @@
-# Trello Clone
+# Kanban Board App (Trello Clone)
 
 This project is a feature-rich, full-stack Trello clone built with modern web technologies. It provides a flexible and intuitive Kanban-style board for managing tasks and workflows, allowing users to create, organize, and track their work seamlessly. The application supports drag-and-drop functionality for both columns and tasks, real-time updates, and a modular architecture that makes it easy to extend and customize.
 
@@ -21,8 +21,8 @@ To get the project up and running on your local machine, follow these simple ste
 
 Make sure you have the following software installed on your system:
 
-- Node.js (v22 or higher)
-- pnpm (v6 or higher)
+- Node.js
+- pnpm or npm.
 
 ### Installation
 
@@ -36,10 +36,18 @@ Make sure you have the following software installed on your system:
    ```
 3. **Install the dependencies**:
    ```sh
+   npm install
+   ```
+   or
+    ```sh
    pnpm install
    ```
-4. **Start the development server**:
+5. **Start the development server**:
    ```sh
+   npm run dev
+   ```
+   or
+      ```sh
    pnpm run dev
    ```
-5. **Open your browser** and navigate to `http://localhost:3000` to see the application in action.
+7. **Open your browser** and navigate to `http://localhost:3000` to see the application in action.
