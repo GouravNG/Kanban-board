@@ -42,7 +42,11 @@ const BoardPage = ({ params }: { params: Promise<{ b_id: string }> }) => {
               <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6 space-y-4">
                 <div className="flex flex-wrap items-center gap-4 sm:gap-6">
                   <div className="text-sm text-gray-600">
-                    <span className="font-medium">Total Task: need to fix</span>
+                    <blockquote className="font-medium">
+                      “Tasks move when decisions do. A board is just the mirror;
+                      the discipline is the reflection.”
+                    </blockquote>
+                    {/* Todo: ai summerrization about the board. */}
                   </div>
                 </div>
                 <CreateTask c_id={data.columns[0].id} />
