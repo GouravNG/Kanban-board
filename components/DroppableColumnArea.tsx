@@ -1,3 +1,5 @@
+import { Skeleton } from "./ui/skeleton"
+
 const DroppableColumnAreas = ({
   children,
   isLoading,
@@ -7,15 +9,7 @@ const DroppableColumnAreas = ({
 }) => {
   return (
     <div className="w-full lg:flex-shrink-0 lg:w-80">
-      <div>
-        {isLoading ? (
-          <div>
-            <h1>Skeletons</h1>
-          </div>
-        ) : (
-          children
-        )}
-      </div>
+      {isLoading ? <Skeleton className="border w-full h-full" /> : children}
     </div>
   )
 }
