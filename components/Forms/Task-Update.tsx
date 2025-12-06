@@ -161,6 +161,7 @@ const UpdateTaskForm: React.FC<TGetTask> = ({
                       selected={field.value}
                       onSelect={field.onChange}
                       captionLayout="dropdown"
+                      disabled={{ before: new Date() }}
                     />
                   </PopoverContent>
                 </Popover>
