@@ -37,6 +37,7 @@ export function BugReportForm({
       onClose()
     } catch (error) {
       setIsSubmitting(false)
+      console.log(error)
     }
   }
 

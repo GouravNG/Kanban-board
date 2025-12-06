@@ -19,6 +19,7 @@ export function BugReportHandler() {
       setIsFormOpen(false)
     } catch (error) {
       toast.error("Failed to submit bug report. Please try again.")
+      console.log(error)
     }
   }
 
